@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Яндекс Переводчик</string>
+    <string name="title_translate">Перевести</string>
+    <string name="title_history">История</string>
+    <string name="title_favorite">Избранное</string>
+    <string name="title_settings">Настройки</string>
+    <string name="promt_text">Введите текст для перевода</string>
+    <string name="dialog_title">Выбор языка</string>
+</resources>
