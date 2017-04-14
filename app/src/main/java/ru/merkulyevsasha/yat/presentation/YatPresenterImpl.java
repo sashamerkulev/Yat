@@ -276,6 +276,9 @@ public class YatPresenterImpl {
     }
 
     void onFavoriteChanged(final int position, final Word word) {
+        TranslateState translateState = state.getTranslateState();
+        final Word currentWord = translateState.getWord();
+
         if (view == null || word == null || word.getId() == 0)
             return;
 
@@ -284,7 +287,9 @@ public class YatPresenterImpl {
             @Override
             public void success(boolean isFavorite) {
 
-                word.setFavorite(isFavorite);
+                if (currentWord != null && currentWord.getId() == word.getId()){
+                    currentWord.setFavorite(isFavorite);
+                }
 
                 if (view == null)
                     return;
