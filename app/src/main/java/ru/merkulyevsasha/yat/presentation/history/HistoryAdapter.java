@@ -40,7 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Word item = mList.get(position);
 
         if (item.isFavorite()){
@@ -52,7 +52,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFavoriteIconListener.onFavoriteClick(position, item);
+                onFavoriteIconListener.onFavoriteClick(holder.getAdapterPosition(), item);
             }
         });
 
