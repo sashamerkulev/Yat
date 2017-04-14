@@ -59,6 +59,7 @@ public class TranslateFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -96,7 +97,12 @@ public class TranslateFragment extends Fragment {
         buttonSpeakSource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getActivity() instanceof OnTextToSpeechListener){
+                    String tts = text.getText().toString();
+                    if (!tts.isEmpty()) {
+                        ((OnTextToSpeechListener) getActivity()).onTextToSpeech(tts);
+                    }
+                }
             }
         });
 
@@ -104,7 +110,12 @@ public class TranslateFragment extends Fragment {
         buttonSpeakTranslated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getActivity() instanceof OnTextToSpeechListener){
+                    String tts = translatedText.getText().toString();
+                    if (!tts.isEmpty()) {
+                        ((OnTextToSpeechListener) getActivity()).onTranslatedTextToSpeech(translatedText.getText().toString());
+                    }
+                }
             }
         });
 
@@ -216,6 +227,11 @@ public class TranslateFragment extends Fragment {
 
     public interface OnFullscrrenButtonListener {
         void onFullscreenButtonClick(int fullscreen);
+    }
+
+    public interface OnTextToSpeechListener {
+        void onTextToSpeech(String text);
+        void onTranslatedTextToSpeech(String text);
     }
 
 }

@@ -1,8 +1,11 @@
 package ru.merkulyevsasha.yat.presentation;
 
+import android.speech.tts.TextToSpeech;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import ru.merkulyevsasha.yat.domain.YatInteractor;
 import ru.merkulyevsasha.yat.pojo.Word;
@@ -31,6 +34,50 @@ public class YatPresenterImpl {
     private StatePresenter state;
     private YatInteractor inter;
 
+    private TextToSpeech ttsText = null;
+    private TextToSpeech ttsTranslatedText = null;
+
+    private Locale getLocale(String language){
+        if (language.equals("fr"))
+            return Locale.FRENCH;
+        if (language.equals("en"))
+            return Locale.UK;
+        return new Locale("ru");
+    }
+
+    private TextToSpeech.OnInitListener onTextInitListener = new TextToSpeech.OnInitListener() {
+        @Override
+        public void onInit(int status) {
+            if (status == TextToSpeech.SUCCESS) {
+
+                TranslateState translateState = state.getTranslateState();
+                String languages = (String) LANGUAGES.keySet().toArray()[translateState.getSelectedLanguage()];
+                String language = languages.substring(0, 2);
+                int result = ttsText.setLanguage(getLocale(language));
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    view.showErrorSpeechLocaleMessage();
+                }
+            }
+        }
+    };
+
+    private TextToSpeech.OnInitListener onTranslatedTextInitListener = new TextToSpeech.OnInitListener() {
+        @Override
+        public void onInit(int status) {
+            if (status == TextToSpeech.SUCCESS) {
+                TranslateState translateState = state.getTranslateState();
+                String languages = (String) LANGUAGES.keySet().toArray()[translateState.getSelectedLanguage()];
+                String language = languages.substring(3, 5);
+                int result = ttsTranslatedText.setLanguage(getLocale(language));
+                if (result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    view.showErrorSpeechLocaleMessage();
+                }
+            }
+        }
+    };
+
     public YatPresenterImpl(YatInteractor inter) {
 
         state = new StatePresenter();
@@ -57,6 +104,8 @@ public class YatPresenterImpl {
 
     void onStop() {
         this.view = null;
+        ttsText = null;
+        ttsTranslatedText = null;
     }
 
     void onTranslateFragmentSelected() {
@@ -136,6 +185,9 @@ public class YatPresenterImpl {
                 view.hideProgress();
 
                 view.showTranslatedText(word);
+
+                ttsTranslatedText = new TextToSpeech(view, onTranslatedTextInitListener);
+                ttsText = new TextToSpeech(view, onTextInitListener);
             }
 
             @Override
@@ -385,4 +437,17 @@ public class YatPresenterImpl {
 
     }
 
+    void onTranslatedTextToSpeech(String text) {
+        //ttsTranslatedText = new TextToSpeech(view, onTranslatedTextInitListener);
+        if (ttsTranslatedText != null)
+            ttsTranslatedText.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        //mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+
+    void onTextToSpeech(String text) {
+        //ttsText = new TextToSpeech(view, onTextInitListener);
+        if (ttsText !=null)
+            ttsText.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        //mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
 }
