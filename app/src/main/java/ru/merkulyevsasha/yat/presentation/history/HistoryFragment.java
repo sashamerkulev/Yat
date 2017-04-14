@@ -25,7 +25,8 @@ public class HistoryFragment extends Fragment {
 
     public static final String KEY_PAGE = "PAGE";
 
-    HistoryAdapter adapter;
+    HistoryAdapter adapterHistory;
+    HistoryAdapter adapterFavorites;
     ViewPager pager;
 
     public static HistoryFragment getInstance(int page){
@@ -51,6 +52,22 @@ public class HistoryFragment extends Fragment {
 
         final View favorite = inflater.inflate(R.layout.page_favorite, null);
         final View history = inflater.inflate(R.layout.page_history, null);
+
+        RecyclerView translatesHistory = (RecyclerView) history.findViewById(R.id.recyclerview);
+        RecyclerView translatesFavorites = (RecyclerView) favorite.findViewById(R.id.recyclerview);
+
+        LinearLayoutManager layoutManagerHistory = new LinearLayoutManager(getActivity());
+        translatesHistory.setLayoutManager(layoutManagerHistory);
+
+        LinearLayoutManager layoutManagerFavorites = new LinearLayoutManager(getActivity());
+        translatesFavorites.setLayoutManager(layoutManagerFavorites);
+
+        adapterHistory = new HistoryAdapter(getActivity(), new ArrayList<Word>());
+        adapterFavorites = new HistoryAdapter(getActivity(), new ArrayList<Word>());
+        translatesHistory.setAdapter(adapterHistory);
+        translatesFavorites.setAdapter(adapterFavorites);
+
+
         List<View> pages = new ArrayList<>();
         pages.add(history);
         pages.add(favorite);
@@ -63,15 +80,6 @@ public class HistoryFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
                 if (positionOffset == 0.0F) {
-                    RecyclerView translates = position == 0
-                            ? (RecyclerView) history.findViewById(R.id.recyclerview)
-                            : (RecyclerView) favorite.findViewById(R.id.recyclerview);
-
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    translates.setLayoutManager(layoutManager);
-
-                    adapter = new HistoryAdapter(getActivity(), new ArrayList<Word>());
-                    translates.setAdapter(adapter);
 
                     if (getActivity() instanceof onHistoryFragmentReadyListener) {
                         ((onHistoryFragmentReadyListener) getActivity()).onReadyHistoryFragment();
@@ -116,8 +124,13 @@ public class HistoryFragment extends Fragment {
     }
 
     public void showWords(List<Word> words) {
-        adapter.setItems(words);
-        adapter.notifyDataSetChanged();
+        if (pager.getCurrentItem() == 0) {
+            adapterHistory.setItems(words);
+            adapterHistory.notifyDataSetChanged();
+        } else {
+            adapterFavorites.setItems(words);
+            adapterFavorites.notifyDataSetChanged();
+        }
     }
 
     public interface onPageChangeListener {
