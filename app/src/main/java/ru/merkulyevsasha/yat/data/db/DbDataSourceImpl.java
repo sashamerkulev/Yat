@@ -160,8 +160,24 @@ public class DbDataSourceImpl extends SQLiteOpenHelper implements DbDataSource{
     }
 
     @Override
+    public void deleteHistory() {
+        try(SQLiteDatabase db = getWritableDatabase()){
+            db.delete(WORD_TABLE_NAME, null, null);
+        }
+    }
+
+    @Override
     public List<Word> getFavorites() {
         String select = "SELECT * FROM " + WORD_TABLE_NAME + " WHERE " + FAVORITE + "=1";
         return getWord(select);
+    }
+
+    @Override
+    public void deleteFavorites() {
+        try(SQLiteDatabase db = getWritableDatabase()){
+            ContentValues values = new ContentValues();
+            values.put(FAVORITE, 0);
+            db.update(WORD_TABLE_NAME, values, null, null);
+        }
     }
 }

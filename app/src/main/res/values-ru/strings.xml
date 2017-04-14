@@ -6,4 +6,7 @@
     <string name="title_settings">Настройки</string>
     <string name="promt_text">Введите текст для перевода</string>
     <string name="dialog_title">Выбор языка</string>
+    <string name="error_translate_message">Ошибка перевода</string>
+    <string name="error_load_message">Ошибка загрузки истории/избранного</string>
+    <string name="error_delete_message">Ошибка удаления истории/избраного</string>
 </resources>

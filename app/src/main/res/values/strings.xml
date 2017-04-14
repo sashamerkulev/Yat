@@ -8,4 +8,5 @@
     <string name="dialog_title">Select language</string>
     <string name="error_translate_message">Error translating text</string>
     <string name="error_load_message">Error loading history/favorite list</string>
+    <string name="error_delete_message">Error deleting history/favorite list</string>
 </resources>

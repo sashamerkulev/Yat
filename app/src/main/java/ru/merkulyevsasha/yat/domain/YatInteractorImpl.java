@@ -52,6 +52,21 @@ public class YatInteractorImpl implements YatInteractor {
     }
 
     @Override
+    public void deleteHistory(final YatDeleteCallback callback) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    repo.deleteHistory();
+                    callback.success();
+                } catch(Exception e){
+                    callback.failure(new YatInteractorException(e));
+                }
+            }
+        });
+    }
+
+    @Override
     public void loadFavorites(final YatLoadCallback callback) {
         executor.submit(new Runnable() {
             @Override
@@ -63,6 +78,21 @@ public class YatInteractorImpl implements YatInteractor {
 
                 } catch(Exception e){
                     callback.failure(e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void deleteFavorites(final YatDeleteCallback callback) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    repo.deleteFavorites();
+                    callback.success();
+                } catch(Exception e){
+                    callback.failure(new YatInteractorException(e));
                 }
             }
         });

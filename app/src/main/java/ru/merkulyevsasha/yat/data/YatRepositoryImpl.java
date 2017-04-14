@@ -67,8 +67,18 @@ public class YatRepositoryImpl implements YatRepository{
     }
 
     @Override
+    public void deleteHistory() {
+        db.deleteHistory();
+    }
+
+    @Override
     public List<Word> getFavorites() {
         return db.getFavorites();
+    }
+
+    @Override
+    public void deleteFavorites() {
+        db.deleteFavorites();
     }
 
 

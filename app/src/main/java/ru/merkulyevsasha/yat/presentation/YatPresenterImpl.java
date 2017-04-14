@@ -205,7 +205,7 @@ public class YatPresenterImpl {
                 if (view == null)
                     return;
                 view.hideProgress();
-                view.showLoadError();
+                view.showLoadErrorMessage();
             }
         };
 
@@ -215,5 +215,40 @@ public class YatPresenterImpl {
             inter.loadFavorites(callback);
         }
 
+    }
+
+    void onDelete() {
+        HistoryState historyState = state.getHistoryState();
+
+        if (view == null)
+            return;
+
+        view.showProgress();
+        YatInteractor.YatDeleteCallback callback = new YatInteractor.YatDeleteCallback() {
+            @Override
+            public void success() {
+
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                onReadyHistoryFragment();
+            }
+
+            @Override
+            public void failure(Exception e) {
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                view.showDeleteErrorMessage();
+            }
+        };
+
+        if (historyState.getSelectedPage() == HistoryState.HistoryPage){
+            inter.deleteHistory(callback);
+        } else {
+            inter.deleteFavorites(callback);
+        }
     }
 }

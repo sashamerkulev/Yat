@@ -20,6 +20,8 @@ public interface YatRepository {
     void setFavorite(int id, boolean favorite);
 
     List<Word> getHistory();
+    void deleteHistory();
     List<Word> getFavorites();
+    void deleteFavorites();
 
 }

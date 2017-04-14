@@ -53,16 +53,6 @@ public class YatActivity extends AppCompatActivity
     YatPresenterImpl pres;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.history_menu, menu);
-        actionDelete = menu.findItem(R.id.action_delete);
-        if (actionDelete != null) {
-            actionDelete.setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -115,6 +105,26 @@ public class YatActivity extends AppCompatActivity
         container = findViewById(R.id.container);
         progress = (ProgressBar) findViewById(R.id.progress);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history_menu, menu);
+        actionDelete = menu.findItem(R.id.action_delete);
+        if (actionDelete != null) {
+            actionDelete.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_delete) {
+            pres.onDelete();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -306,7 +316,7 @@ public class YatActivity extends AppCompatActivity
         }
     }
 
-    public void showLoadError(){
+    public void showLoadErrorMessage(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -315,4 +325,12 @@ public class YatActivity extends AppCompatActivity
         });
     }
 
+    public void showDeleteErrorMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(container, R.string.error_delete_message, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
 }

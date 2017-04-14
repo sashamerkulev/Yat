@@ -20,10 +20,17 @@ public interface YatInteractor {
         void failure(Exception e);
     }
 
+    interface YatDeleteCallback {
+        void success();
+        void failure(Exception e);
+    }
+
     void setFavorite(int id, boolean favorite);
 
     void loadHistory(YatLoadCallback callback);
+    void deleteHistory(YatDeleteCallback callback);
     void loadFavorites(YatLoadCallback callback);
+    void deleteFavorites(YatDeleteCallback callback);
 
     void translate(String word, String language, final String ui, YatTranslateCallback callback);
 
