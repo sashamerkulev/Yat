@@ -185,13 +185,13 @@ public class HistoryFragment extends Fragment {
 
     private void onSearchHistory(String text){
         if (getActivity() instanceof onSearchListener){
-            ((onSearchListener)getActivity()).onSearchHistory(text);
+            ((onSearchListener)getActivity()).onSearch(text);
         }
     }
 
     private void onSearchFavorites(String text){
         if (getActivity() instanceof onSearchListener){
-            ((onSearchListener)getActivity()).onSearchFavorites(text);
+            ((onSearchListener)getActivity()).onSearch(text);
         }
     }
 
@@ -208,8 +208,7 @@ public class HistoryFragment extends Fragment {
     }
 
     public interface onSearchListener{
-        void onSearchHistory(String text);
-        void onSearchFavorites(String text);
+        void onSearch(String text);
     }
 
 

@@ -366,12 +366,8 @@ public class YatActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSearchHistory(String text) {
+    public void onSearch(String text) {
         pres.onSearch(text);
     }
 
-    @Override
-    public void onSearchFavorites(String text) {
-        pres.onSearch(text);
-    }
 }
