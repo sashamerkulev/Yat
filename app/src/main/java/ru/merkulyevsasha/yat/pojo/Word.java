@@ -14,6 +14,7 @@ public class Word implements Serializable{
     private String text;
     private String language;
     private String translatedText;
+    private String json;
     private boolean favorite;
     private List<Def> def;
 
@@ -63,5 +64,13 @@ public class Word implements Serializable{
 
     public void setTranslatedText(String translatedText) {
         this.translatedText = translatedText;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
     }
 }

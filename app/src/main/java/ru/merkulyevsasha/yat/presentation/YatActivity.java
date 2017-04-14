@@ -2,6 +2,7 @@ package ru.merkulyevsasha.yat.presentation;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ import ru.merkulyevsasha.yat.presentation.translate.TranslateFragment;
 public class YatActivity extends AppCompatActivity
         implements HistoryFragment.onPageChangeListener
         , HistoryFragment.onHistoryFragmentReadyListener
+        , HistoryFragment.onHistoryItemClickListener
         , TranslateFragment.OnTextCompleteListener
         , TranslateFragment.OnFavoriteListener
 {
@@ -347,5 +349,12 @@ public class YatActivity extends AppCompatActivity
                 }
             });
         }
+    }
+
+    @Override
+    public void onItemClick(Word item) {
+        Intent intent = new Intent(this, WordDetails.class);
+        intent.putExtra(WordDetails.KEY_WORD, item);
+        startActivity(intent);
     }
 }

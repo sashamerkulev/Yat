@@ -131,6 +131,7 @@ public class DbDataSourceImpl extends SQLiteOpenHelper implements DbDataSource{
         item.setLanguage(cursor.getString(cursor.getColumnIndex(LANG)));
         item.setTranslatedText(cursor.getString(cursor.getColumnIndex(TRANSLATED_TEXT)));
         item.setText(cursor.getString(cursor.getColumnIndex(TEXT)));
+        item.setJson(cursor.getString(cursor.getColumnIndex(JSON)));
         item.setFavorite(cursor.getInt(cursor.getColumnIndex(FAVORITE))==1);
         item.setId(cursor.getInt(cursor.getColumnIndex(ID)));
         return item;

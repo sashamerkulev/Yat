@@ -1,12 +1,13 @@
 package ru.merkulyevsasha.yat.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by sasha_merkulev on 12.04.2017.
  */
 
-public class Tr {
+public class Tr implements Serializable {
 
     private String text;
     private String pos;

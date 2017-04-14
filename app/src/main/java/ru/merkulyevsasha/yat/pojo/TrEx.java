@@ -1,10 +1,12 @@
 package ru.merkulyevsasha.yat.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by sasha_merkulev on 12.04.2017.
  */
 
-public class TrEx {
+public class TrEx implements Serializable {
 
     private String text;
 

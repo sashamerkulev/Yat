@@ -20,12 +20,14 @@ import ru.merkulyevsasha.yat.pojo.Word;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     private static final String TAG = HistoryAdapter.class.getSimpleName();
-    private Context mContext;
+    private final Context mContext;
     private List<Word> mList;
+    private final OnItemClickListener listener;
 
-    public HistoryAdapter(Context context, List<Word> list) {
+    public HistoryAdapter(Context context, List<Word> list, OnItemClickListener listener) {
         this.mContext = context;
         this.mList = list;
+        this.listener = listener;
     }
 
     @Override
@@ -48,6 +50,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.text.setText(item.getText());
         holder.translatedText.setText(item.getTranslatedText());
         holder.lang.setText(item.getLanguage());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(item);
+            }
+        });
 
     }
 

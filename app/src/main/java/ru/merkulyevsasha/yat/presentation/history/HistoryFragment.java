@@ -61,12 +61,19 @@ public class HistoryFragment extends Fragment {
 
         LinearLayoutManager layoutManagerFavorites = new LinearLayoutManager(getActivity());
         translatesFavorites.setLayoutManager(layoutManagerFavorites);
+        HistoryAdapter.OnItemClickListener listener = new HistoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Word item) {
+                if (getActivity() instanceof onHistoryItemClickListener) {
+                    ((HistoryFragment.onHistoryItemClickListener) getActivity()).onItemClick(item);
+                }
+            }
+        };
 
-        adapterHistory = new HistoryAdapter(getActivity(), new ArrayList<Word>());
-        adapterFavorites = new HistoryAdapter(getActivity(), new ArrayList<Word>());
+        adapterHistory = new HistoryAdapter(getActivity(), new ArrayList<Word>(), listener);
+        adapterFavorites = new HistoryAdapter(getActivity(), new ArrayList<Word>(), listener);
         translatesHistory.setAdapter(adapterHistory);
         translatesFavorites.setAdapter(adapterFavorites);
-
 
         List<View> pages = new ArrayList<>();
         pages.add(history);
@@ -139,6 +146,10 @@ public class HistoryFragment extends Fragment {
 
     public interface onHistoryFragmentReadyListener {
         void onReadyHistoryFragment();
+    }
+
+    public interface onHistoryItemClickListener{
+        void onItemClick(Word item);
     }
 
 }
