@@ -1,5 +1,6 @@
 package ru.merkulyevsasha.yat.presentation.translate;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,12 +30,15 @@ public class TranslateFragment extends Fragment {
     private static final String KEY_TEXT = "TEXT";
     private static final String KEY_WORD = "WORD";
 
+    private View layoutText;
+
     private EditText text;
     private ImageButton buttonClear;
     private ImageButton buttonMicrophone;
     private ImageButton buttonSpeakSource;
     private ImageButton buttonSpeakTranslated;
     private ImageButton buttonFavorite;
+    private ImageButton buttonFullscreen;
 
     private TextView translatedText;
     private TextView sourceText;
@@ -109,6 +113,22 @@ public class TranslateFragment extends Fragment {
             public void onClick(View v) {
                 if (getActivity() instanceof OnFavoriteListener){
                     ((OnFavoriteListener)getActivity()).onFavoriteChanged();
+                }
+            }
+        });
+
+        layoutText = view.findViewById(R.id.layout_text);
+
+        buttonFullscreen = (ImageButton)view.findViewById(R.id.button_fullscreen);
+        buttonFullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (layoutText.getVisibility() == View.GONE){
+                    layoutText.setVisibility(View.VISIBLE);
+                    buttonFullscreen.clearColorFilter();
+                } else {
+                    layoutText.setVisibility(View.GONE);
+                    buttonFullscreen.setColorFilter(ContextCompat.getColor(getActivity(), R.color.brown));
                 }
             }
         });
