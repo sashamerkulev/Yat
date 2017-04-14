@@ -1,6 +1,5 @@
 package ru.merkulyevsasha.yat.presentation.translate;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,6 +28,7 @@ public class TranslateFragment extends Fragment {
 
     private static final String KEY_TEXT = "TEXT";
     private static final String KEY_WORD = "WORD";
+    private static final String KEY_FULLSCREEN = "FULLSCREEN";
 
     private View layoutText;
 
@@ -45,12 +45,13 @@ public class TranslateFragment extends Fragment {
 
     private TranslateDefAdapter adapter;
 
-    public static TranslateFragment getInstance(String text, Word word){
+    public static TranslateFragment getInstance(String text, Word word, int fullscreen){
 
         TranslateFragment fragment = new TranslateFragment();
         Bundle args = new Bundle();
         args.putString(KEY_TEXT, text);
         args.putSerializable(KEY_WORD, word);
+        args.putInt(KEY_FULLSCREEN, fullscreen);
         fragment.setArguments(args);
         return fragment;
     }
@@ -126,9 +127,13 @@ public class TranslateFragment extends Fragment {
                 if (layoutText.getVisibility() == View.GONE){
                     layoutText.setVisibility(View.VISIBLE);
                     buttonFullscreen.clearColorFilter();
+                    if (getActivity() instanceof OnFullscrrenButtonListener){
+                        ((OnFullscrrenButtonListener)getActivity()).onFullscreenButtonClick(0);
+                    }
                 } else {
                     layoutText.setVisibility(View.GONE);
-                    buttonFullscreen.setColorFilter(ContextCompat.getColor(getActivity(), R.color.brown));
+                    buttonFullscreen.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                    ((OnFullscrrenButtonListener)getActivity()).onFullscreenButtonClick(1);
                 }
             }
         });
@@ -137,6 +142,9 @@ public class TranslateFragment extends Fragment {
         String argsText = args.getString(KEY_TEXT);
         Word word = (Word)args.getSerializable(KEY_WORD);
         text.setText(argsText);
+
+        int fullscreen = args.getInt(KEY_FULLSCREEN);
+        setFullscreenIconColor(fullscreen == 1);
 
         RecyclerView translates = (RecyclerView)view.findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -178,9 +186,19 @@ public class TranslateFragment extends Fragment {
 
     private void setFavoriteIconColor(boolean isFavorite){
         if (isFavorite) {
-            buttonFavorite.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+            buttonFavorite.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         } else {
             buttonFavorite.clearColorFilter();
+        }
+    }
+
+    private void setFullscreenIconColor(boolean isFullscreen){
+        if (isFullscreen) {
+            buttonFullscreen.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            layoutText.setVisibility(View.GONE);
+        } else {
+            buttonFullscreen.clearColorFilter();
+            layoutText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -194,6 +212,10 @@ public class TranslateFragment extends Fragment {
 
     public interface OnFavoriteListener{
         void onFavoriteChanged();
+    }
+
+    public interface OnFullscrrenButtonListener {
+        void onFullscreenButtonClick(int fullscreen);
     }
 
 }

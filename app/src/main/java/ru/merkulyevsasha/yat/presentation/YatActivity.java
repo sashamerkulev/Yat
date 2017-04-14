@@ -35,6 +35,7 @@ public class YatActivity extends AppCompatActivity
         , HistoryFragment.onHistoryItemClickListener
         , TranslateFragment.OnTextCompleteListener
         , TranslateFragment.OnFavoriteListener
+        , TranslateFragment.OnFullscrrenButtonListener
 {
 
     private static String TRANSLATE_FRAGMENT = "TANSLATE";
@@ -171,13 +172,13 @@ public class YatActivity extends AppCompatActivity
         }
     }
 
-    public void showTranslateFragment(int selectedLanguage, String text, Word word) {
+    public void showTranslateFragment(int selectedLanguage, String text, Word word, int isFullscreen) {
 
         itemTranslate.select();
         itemHistory.unselect();
         itemSettings.unselect();
 
-        TranslateFragment fragment = TranslateFragment.getInstance(text, word);
+        TranslateFragment fragment = TranslateFragment.getInstance(text, word, isFullscreen);
         replaceFragmentBy(fragment, TRANSLATE_FRAGMENT);
         setActionDeleteVisible(false);
 
@@ -356,5 +357,10 @@ public class YatActivity extends AppCompatActivity
         Intent intent = new Intent(this, WordDetails.class);
         intent.putExtra(WordDetails.KEY_WORD, item);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFullscreenButtonClick(int fullscreen) {
+        pres.onFullscreen(fullscreen);
     }
 }

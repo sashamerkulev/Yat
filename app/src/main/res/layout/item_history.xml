@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     >
 
     <ImageView
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:text="RU-ENG"
         android:textColor="@color/gray"
+        android:textAllCaps="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         />

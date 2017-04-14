@@ -42,7 +42,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         final Word item = mList.get(position);
 
         if (item.isFavorite()){
-            holder.favorite.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
+            holder.favorite.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
         } else {
             holder.favorite.clearColorFilter();
         }

@@ -35,7 +35,7 @@ public class YatPresenterImpl {
 
         state = new StatePresenter();
         state.setFragments(StatePresenter.Fragments.Translate);
-        state.setTranslateState(new TranslateState(0, ""));
+        state.setTranslateState(new TranslateState(0, "",  0));
         state.setHistoryState(new HistoryState(HistoryState.HistoryPage));
         state.setSettingsState(new SettingsState());
         this.inter = inter;
@@ -65,7 +65,7 @@ public class YatPresenterImpl {
 
         state.setFragments(StatePresenter.Fragments.Translate);
         TranslateState translateState = state.getTranslateState();
-        view.showTranslateFragment(translateState.getSelectedLanguage(), translateState.getText(), translateState.getWord());
+        view.showTranslateFragment(translateState.getSelectedLanguage(), translateState.getText(), translateState.getWord(), translateState.getFullscreen());
     }
 
     void onHistoryFragmentSelected(){
@@ -299,4 +299,10 @@ public class YatPresenterImpl {
         });
 
     }
+
+    void onFullscreen(int fullscreen) {
+        TranslateState translateState = state.getTranslateState();
+        translateState.setFullscreen(fullscreen);
+    }
+
 }

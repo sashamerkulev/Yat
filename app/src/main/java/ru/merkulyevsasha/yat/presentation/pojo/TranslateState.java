@@ -9,12 +9,14 @@ import ru.merkulyevsasha.yat.pojo.Word;
 public class TranslateState {
 
     private int selectedLanguage;
+    private int fullscreen;
     private String text;
     private Word word;
 
-    public TranslateState(int selectedLanguage, String text){
+    public TranslateState(int selectedLanguage, String text, int fullscreen){
         this.selectedLanguage = selectedLanguage;
         this.text = text;
+        this.fullscreen = fullscreen;
     }
 
     public int getSelectedLanguage() {
@@ -37,5 +39,13 @@ public class TranslateState {
 
     public Word getWord() {
         return word;
+    }
+
+    public int getFullscreen() {
+        return fullscreen;
+    }
+
+    public void setFullscreen(int fullscreen) {
+        this.fullscreen = fullscreen;
     }
 }
