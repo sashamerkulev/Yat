@@ -75,8 +75,7 @@ public class YatPresenterImpl {
 
         state.setFragments(StatePresenter.Fragments.History);
         HistoryState historyState = state.getHistoryState();
-        final int page = historyState.getSelectedPage();
-        view.showHistoryFragment(page);
+        view.showHistoryFragment(historyState.getSelectedPage(), historyState.getSearchText());
 
     }
 
@@ -194,7 +193,7 @@ public class YatPresenterImpl {
     void onReadyHistoryFragment() {
 
         HistoryState historyState = state.getHistoryState();
-
+        String text = historyState.getSearchText();
         if (view == null)
             return;
 
@@ -217,10 +216,18 @@ public class YatPresenterImpl {
             }
         };
 
-        if (historyState.getSelectedPage() == HistoryState.HistoryPage){
-            inter.loadHistory(callback);
+        if (text.isEmpty()) {
+            if (historyState.getSelectedPage() == HistoryState.HistoryPage) {
+                inter.loadHistory(callback);
+            } else {
+                inter.loadFavorites(callback);
+            }
         } else {
-            inter.loadFavorites(callback);
+            if (historyState.getSelectedPage() == HistoryState.HistoryPage){
+                inter.searchHistory(text, callback);
+            } else {
+                inter.searchFavorites(text, callback);
+            }
         }
 
     }

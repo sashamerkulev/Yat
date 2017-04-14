@@ -186,13 +186,13 @@ public class YatActivity extends AppCompatActivity
         titles.setLeftTitle((String) YatPresenterImpl.LANGUAGES.values().toArray()[selectedLanguage]);
     }
 
-    public void showHistoryFragment(int selectedPage) {
+    public void showHistoryFragment(int selectedPage, String searchText) {
 
         itemTranslate.unselect();
         itemHistory.select();
         itemSettings.unselect();
 
-        HistoryFragment fragment = HistoryFragment.getInstance(selectedPage);
+        HistoryFragment fragment = HistoryFragment.getInstance(selectedPage, searchText);
         replaceFragmentBy(fragment, HISTORY_FRAGMENT);
         setActionDeleteVisible(true);
 

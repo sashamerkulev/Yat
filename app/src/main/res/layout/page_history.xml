@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_search"
         >
-
     </android.support.v7.widget.RecyclerView>
 
 

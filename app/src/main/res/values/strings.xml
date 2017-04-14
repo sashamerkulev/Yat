@@ -9,4 +9,6 @@
     <string name="error_translate_message">Error translating text</string>
     <string name="error_load_message">Error loading history/favorite list</string>
     <string name="error_delete_message">Error deleting history/favorite list</string>
+    <string name="search_text_history_hint">Search in history</string>
+    <string name="search_text_favorites_hint">Search in favorites</string>
 </resources>

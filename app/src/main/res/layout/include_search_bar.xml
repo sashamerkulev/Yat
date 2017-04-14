@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
+    android:elevation="4dp"
     >
 
     <ImageView
@@ -26,9 +27,25 @@
         android:layout_toRightOf="@+id/imageview_search"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
-        android:layout_marginBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:inputType="text"
+        android:textSize="20sp"
         />
+
+    <ImageView
+        android:id="@+id/imageview_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_clear_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        />
+
 
     <View
         android:layout_width="wrap_content"

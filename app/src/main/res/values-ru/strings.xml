@@ -9,4 +9,6 @@
     <string name="error_translate_message">Ошибка перевода</string>
     <string name="error_load_message">Ошибка загрузки истории/избранного</string>
     <string name="error_delete_message">Ошибка удаления истории/избраного</string>
+    <string name="search_text_history_hint">Найти в истории</string>
+    <string name="search_text_favorites_hint">Найти в избранном</string>
 </resources>

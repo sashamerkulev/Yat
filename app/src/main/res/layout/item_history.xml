@@ -14,15 +14,18 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_bookmark_black_24dp"
         android:tint="@color/gray"
+        android:layout_marginLeft="8dp"
         />
 
     <TextView
         android:id="@+id/textview_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:text="streamline"
+        android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_toRightOf="@+id/imageview_favorite"
         />
@@ -33,7 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="8dp"
         android:text="оптимизация"
+        android:textSize="18sp"
         android:textColor="@color/gray"
         android:layout_toRightOf="@+id/imageview_favorite"
         android:layout_below="@+id/textview_text"
@@ -48,6 +53,7 @@
         android:textAllCaps="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
         />
 
     <View
