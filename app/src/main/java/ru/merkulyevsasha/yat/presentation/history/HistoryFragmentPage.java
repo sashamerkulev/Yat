@@ -19,7 +19,7 @@ import ru.merkulyevsasha.yat.pojo.Word;
  * Created by sasha_merkulev on 14.04.2017.
  */
 
-public class HistoryFragmentPage {
+class HistoryFragmentPage {
 
     private HistoryAdapter adapter;
 
@@ -27,8 +27,10 @@ public class HistoryFragmentPage {
     private ImageView butonSearch;
     private ImageView buttonClear;
 
-    public HistoryFragmentPage(Context context, View view, String hint,
-                               final HistoryAdapter.OnItemClickListener itemClickListener, final onSearchListener onSearchListener){
+    HistoryFragmentPage(Context context, View view, String hint,
+                               final HistoryAdapter.OnItemClickListener itemClickListener,
+                               final onSearchListener onSearchListener,
+                               final HistoryAdapter.OnFavoriteIconListener onFavoriteIconListener){
 
         edittextSearch = (EditText)view.findViewById(R.id.edittext_searchtext);
         edittextSearch.setHint(hint);
@@ -60,21 +62,30 @@ public class HistoryFragmentPage {
         LinearLayoutManager layoutManagerHistory = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManagerHistory);
 
-        adapter = new HistoryAdapter(context, new ArrayList<Word>(), itemClickListener);
+        adapter = new HistoryAdapter(context, new ArrayList<Word>(), itemClickListener, onFavoriteIconListener);
         recyclerView.setAdapter(adapter);
     }
 
-    public void showWords(List<Word> words) {
+    void showWords(List<Word> words) {
         adapter.setItems(words);
         adapter.notifyDataSetChanged();
     }
 
-    public void setSearchText(String text){
+    void setSearchText(String text){
         edittextSearch.setText(text);
     }
 
-    public interface onSearchListener{
+    void removeItem(int position){
+        adapter.remove(position);
+    }
+
+    public void changeItem(int position, boolean isFavorite) {
+        adapter.changeItem(position, isFavorite);
+    }
+
+    interface onSearchListener{
         void onSearch(String text);
     }
+
 
 }

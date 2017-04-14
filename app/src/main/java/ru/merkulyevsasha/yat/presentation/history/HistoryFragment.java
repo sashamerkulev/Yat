@@ -55,8 +55,8 @@ public class HistoryFragment extends Fragment {
         HistoryAdapter.OnItemClickListener onItemClickListener = new HistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Word item) {
-                if (getActivity() instanceof onHistoryItemClickListener) {
-                    ((HistoryFragment.onHistoryItemClickListener) getActivity()).onItemClick(item);
+                if (getActivity() instanceof OnHistoryItemClickListener) {
+                    ((OnHistoryItemClickListener) getActivity()).onItemClick(item);
                 }
             }
         };
@@ -68,8 +68,19 @@ public class HistoryFragment extends Fragment {
             }
         };
 
-        pageHistory = new HistoryFragmentPage(getActivity(), history, getString(R.string.search_text_history_hint), onItemClickListener, onSearchListener);
-        pageFavorites = new HistoryFragmentPage(getActivity(), favorite, getString(R.string.search_text_favorites_hint), onItemClickListener, onSearchListener);
+        HistoryAdapter.OnFavoriteIconListener onFavoriteIconListener = new HistoryAdapter.OnFavoriteIconListener() {
+            @Override
+            public void onFavoriteClick(int position, Word item) {
+                if (getActivity() instanceof OnFavoriteChangeListener) {
+                    ((OnFavoriteChangeListener) getActivity()).onFavoriteChange(position, item);
+                }
+            }
+        };
+
+        pageHistory = new HistoryFragmentPage(getActivity(), history, getString(R.string.search_text_history_hint),
+                onItemClickListener, onSearchListener, onFavoriteIconListener);
+        pageFavorites = new HistoryFragmentPage(getActivity(), favorite, getString(R.string.search_text_favorites_hint),
+                onItemClickListener, onSearchListener, onFavoriteIconListener);
 
         List<View> pages = new ArrayList<>();
         pages.add(history);
@@ -82,8 +93,8 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (positionOffset == 0.0F) {
-                    if (getActivity() instanceof onHistoryFragmentReadyListener) {
-                        ((onHistoryFragmentReadyListener) getActivity()).onReadyHistoryFragment();
+                    if (getActivity() instanceof OnHistoryFragmentReadyListener) {
+                        ((OnHistoryFragmentReadyListener) getActivity()).onReadyHistoryFragment();
                     }
                 }
             }
@@ -134,8 +145,16 @@ public class HistoryFragment extends Fragment {
     }
 
     private void onSearchHistory(String text){
-        if (getActivity() instanceof onSearchListener){
-            ((onSearchListener)getActivity()).onSearch(text);
+        if (getActivity() instanceof OnSearchListener){
+            ((OnSearchListener)getActivity()).onSearch(text);
+        }
+    }
+
+    public void setFavorite(int position, boolean isFavorite) {
+        if (pager.getCurrentItem() == 0) {
+            pageHistory.changeItem(position, isFavorite);
+        } else {
+            pageFavorites.removeItem(position);
         }
     }
 
@@ -143,17 +162,20 @@ public class HistoryFragment extends Fragment {
         void onPageSelected(int position);
     }
 
-    public interface onHistoryFragmentReadyListener {
+    public interface OnHistoryFragmentReadyListener {
         void onReadyHistoryFragment();
     }
 
-    public interface onHistoryItemClickListener{
+    public interface OnHistoryItemClickListener {
         void onItemClick(Word item);
     }
 
-    public interface onSearchListener{
+    public interface OnSearchListener {
         void onSearch(String text);
     }
 
+    public interface OnFavoriteChangeListener {
+        void onFavoriteChange(int position, Word word);
+    }
 
 }

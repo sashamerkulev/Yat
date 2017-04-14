@@ -15,6 +15,7 @@
         android:src="@drawable/ic_bookmark_black_24dp"
         android:tint="@color/gray"
         android:layout_marginLeft="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         />
 
     <TextView
@@ -28,6 +29,7 @@
         android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_toRightOf="@+id/imageview_favorite"
+        android:clickable="false"
         />
 
     <TextView
@@ -42,6 +44,7 @@
         android:textColor="@color/gray"
         android:layout_toRightOf="@+id/imageview_favorite"
         android:layout_below="@+id/textview_text"
+        android:clickable="false"
         />
 
     <TextView
@@ -54,6 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
+        android:clickable="false"
         />
 
     <View

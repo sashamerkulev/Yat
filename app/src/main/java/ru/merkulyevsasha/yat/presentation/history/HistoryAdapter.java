@@ -22,12 +22,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private static final String TAG = HistoryAdapter.class.getSimpleName();
     private final Context mContext;
     private List<Word> mList;
-    private final OnItemClickListener listener;
+    private final OnItemClickListener onItemClickListener;
+    private final OnFavoriteIconListener onFavoriteIconListener;
 
-    public HistoryAdapter(Context context, List<Word> list, OnItemClickListener listener) {
+    public HistoryAdapter(Context context, List<Word> list, OnItemClickListener onItemClickListener, OnFavoriteIconListener onFavoriteIconListener) {
         this.mContext = context;
         this.mList = list;
-        this.listener = listener;
+        this.onItemClickListener = onItemClickListener;
+        this.onFavoriteIconListener = onFavoriteIconListener;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final Word item = mList.get(position);
 
         if (item.isFavorite()){
@@ -47,6 +49,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             holder.favorite.clearColorFilter();
         }
 
+        holder.favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFavoriteIconListener.onFavoriteClick(position, item);
+            }
+        });
+
         holder.text.setText(item.getText());
         holder.translatedText.setText(item.getTranslatedText());
         holder.lang.setText(item.getLanguage());
@@ -54,7 +63,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onItemClick(item);
+                onItemClickListener.onItemClick(item);
             }
         });
 
@@ -65,15 +74,30 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return mList.size();
     }
 
-    public void setItems(List<Word> words) {
+    void setItems(List<Word> words) {
         mList = words;
     }
 
-    public interface OnItemClickListener {
+    void remove(int position){
+        mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    void changeItem(int position, boolean isFavorite) {
+        Word item = mList.get(position);
+        item.setFavorite(isFavorite);
+        notifyItemChanged(position);
+    }
+
+    interface OnItemClickListener {
         void onItemClick(Word item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    interface OnFavoriteIconListener{
+        void onFavoriteClick(int position, Word item);
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         final ImageView favorite;
 
@@ -81,7 +105,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         final TextView translatedText;
         final TextView lang;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             favorite = (ImageView)itemView.findViewById(R.id.imageview_favorite);

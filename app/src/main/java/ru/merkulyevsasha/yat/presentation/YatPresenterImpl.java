@@ -19,7 +19,7 @@ public class YatPresenterImpl {
 
     public static final LinkedHashMap<String, String> LANGUAGES = new LinkedHashMap<String, String>();
 
-    static{
+    static {
         LANGUAGES.put("ru-en", "Русский -> Английский");
         LANGUAGES.put("en-ru", "Английский -> Русский");
         LANGUAGES.put("ru-fr", "Русский -> Французский");
@@ -31,35 +31,35 @@ public class YatPresenterImpl {
     private StatePresenter state;
     private YatInteractor inter;
 
-    public YatPresenterImpl(YatInteractor inter){
+    public YatPresenterImpl(YatInteractor inter) {
 
         state = new StatePresenter();
         state.setFragments(StatePresenter.Fragments.Translate);
-        state.setTranslateState(new TranslateState(0, "",  0));
+        state.setTranslateState(new TranslateState(0, "", 0));
         state.setHistoryState(new HistoryState(HistoryState.HistoryPage));
         state.setSettingsState(new SettingsState());
         this.inter = inter;
     }
 
-    void onStart(YatActivity view){
+    void onStart(YatActivity view) {
         this.view = view;
 
         StatePresenter.Fragments fragment = state.getFragments();
         if (fragment == StatePresenter.Fragments.Translate) {
             onTranslateFragmentSelected();
-        } else if (fragment == StatePresenter.Fragments.History){
+        } else if (fragment == StatePresenter.Fragments.History) {
             onHistoryFragmentSelected();
-        } else if (fragment == StatePresenter.Fragments.Settings){
+        } else if (fragment == StatePresenter.Fragments.Settings) {
             onSettingsFragmentSelected();
         }
 
     }
 
-    void onStop(){
+    void onStop() {
         this.view = null;
     }
 
-    void onTranslateFragmentSelected(){
+    void onTranslateFragmentSelected() {
         if (view == null)
             return;
 
@@ -69,7 +69,7 @@ public class YatPresenterImpl {
                 translateState.getWord(), translateState.getFullscreen());
     }
 
-    void onHistoryFragmentSelected(){
+    void onHistoryFragmentSelected() {
         if (view == null)
             return;
 
@@ -79,7 +79,7 @@ public class YatPresenterImpl {
 
     }
 
-    void onSettingsFragmentSelected(){
+    void onSettingsFragmentSelected() {
         if (view == null)
             return;
 
@@ -88,33 +88,33 @@ public class YatPresenterImpl {
         view.showSettingsFragment();
     }
 
-    void onTitle1Click(){
+    void onTitle1Click() {
         if (view == null)
             return;
 
         StatePresenter.Fragments fragment = state.getFragments();
-        if (fragment == StatePresenter.Fragments.Translate){
+        if (fragment == StatePresenter.Fragments.Translate) {
             TranslateState translateState = state.getTranslateState();
             view.showSelectLanguageDialog(translateState.getSelectedLanguage());
             return;
         }
 
-        if (fragment == StatePresenter.Fragments.History){
+        if (fragment == StatePresenter.Fragments.History) {
             onSelectHistoryPage();
         }
     }
 
-    void onTitle2Click(){
+    void onTitle2Click() {
         if (view == null)
             return;
 
         StatePresenter.Fragments fragment = state.getFragments();
-        if (fragment == StatePresenter.Fragments.History){
+        if (fragment == StatePresenter.Fragments.History) {
             onSelectFavoritePage();
         }
     }
 
-    private void translate(){
+    private void translate() {
         final TranslateState translateState = state.getTranslateState();
         String text = translateState.getText();
 
@@ -150,7 +150,7 @@ public class YatPresenterImpl {
 
     }
 
-    void onSelectLanguage(int selectedLanguage){
+    void onSelectLanguage(int selectedLanguage) {
         TranslateState translateState = state.getTranslateState();
         translateState.setSelectedLanguage(selectedLanguage);
 
@@ -160,10 +160,10 @@ public class YatPresenterImpl {
         translate();
     }
 
-    void onTextTranslate(String text){
+    void onTextTranslate(String text) {
         final TranslateState translateState = state.getTranslateState();
 
-        if (text.isEmpty()){
+        if (text.isEmpty()) {
             translateState.setText(text);
             translateState.setWord(null);
             return;
@@ -174,7 +174,7 @@ public class YatPresenterImpl {
         translate();
     }
 
-    void onSelectHistoryPage(){
+    void onSelectHistoryPage() {
         HistoryState historyState = state.getHistoryState();
         historyState.setSelectedPage(HistoryState.HistoryPage);
         if (view != null) {
@@ -182,7 +182,7 @@ public class YatPresenterImpl {
         }
     }
 
-    void onSelectFavoritePage(){
+    void onSelectFavoritePage() {
         HistoryState historyState = state.getHistoryState();
         historyState.setSelectedPage(HistoryState.FavoritePage);
         if (view != null) {
@@ -223,7 +223,7 @@ public class YatPresenterImpl {
                 inter.loadFavorites(callback);
             }
         } else {
-            if (historyState.getSelectedPage() == HistoryState.HistoryPage){
+            if (historyState.getSelectedPage() == HistoryState.HistoryPage) {
                 inter.searchHistory(text, callback);
             } else {
                 inter.searchFavorites(text, callback);
@@ -249,10 +249,10 @@ public class YatPresenterImpl {
                 view.hideProgress();
                 view.showWords(new ArrayList<Word>());
 
-                if (historyState.getSelectedPage() == HistoryState.FavoritePage){
+                if (historyState.getSelectedPage() == HistoryState.FavoritePage) {
                     TranslateState translateState = state.getTranslateState();
                     final Word word = translateState.getWord();
-                    if (word != null){
+                    if (word != null) {
                         word.setFavorite(false);
                     }
                 }
@@ -268,11 +268,40 @@ public class YatPresenterImpl {
             }
         };
 
-        if (historyState.getSelectedPage() == HistoryState.HistoryPage){
+        if (historyState.getSelectedPage() == HistoryState.HistoryPage) {
             inter.deleteHistory(callback);
         } else {
             inter.deleteFavorites(callback);
         }
+    }
+
+    void onFavoriteChanged(final int position, final Word word) {
+        if (view == null || word == null || word.getId() == 0)
+            return;
+
+        view.showProgress();
+        inter.setFavorite((int) word.getId(), new YatInteractor.YatFavoriteChangedCallback() {
+            @Override
+            public void success(boolean isFavorite) {
+
+                word.setFavorite(isFavorite);
+
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                view.changeFavorite(position, isFavorite);
+            }
+
+            @Override
+            public void failure(Exception e) {
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+
+            }
+        });
     }
 
     void onFavoriteChanged() {
@@ -283,7 +312,7 @@ public class YatPresenterImpl {
             return;
 
         view.showProgress();
-        inter.setFavorite((int)word.getId(), new YatInteractor.YatFavoriteChangedCallback() {
+        inter.setFavorite((int) word.getId(), new YatInteractor.YatFavoriteChangedCallback() {
             @Override
             public void success(boolean isFavorite) {
 
@@ -305,7 +334,6 @@ public class YatPresenterImpl {
 
             }
         });
-
     }
 
     void onFullscreen(int fullscreen) {

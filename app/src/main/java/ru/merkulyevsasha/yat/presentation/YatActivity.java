@@ -31,9 +31,10 @@ import ru.merkulyevsasha.yat.presentation.translate.TranslateFragment;
 
 public class YatActivity extends AppCompatActivity
         implements HistoryFragment.onPageChangeListener
-        , HistoryFragment.onHistoryFragmentReadyListener
-        , HistoryFragment.onHistoryItemClickListener
-        , HistoryFragment.onSearchListener
+        , HistoryFragment.OnHistoryFragmentReadyListener
+        , HistoryFragment.OnHistoryItemClickListener
+        , HistoryFragment.OnSearchListener
+        , HistoryFragment.OnFavoriteChangeListener
         , TranslateFragment.OnTextCompleteListener
         , TranslateFragment.OnFavoriteListener
         , TranslateFragment.OnFullscrrenButtonListener
@@ -341,6 +342,11 @@ public class YatActivity extends AppCompatActivity
         pres.onFavoriteChanged();
     }
 
+    @Override
+    public void onFavoriteChange(int position, Word word) {
+        pres.onFavoriteChanged(position, word);
+    }
+
     public void changeFavorite(final boolean isFavorite) {
         final TranslateFragment translated = (TranslateFragment)getSupportFragmentManager().findFragmentByTag(TRANSLATE_FRAGMENT);
         if (translated != null && translated.isVisible()) {
@@ -348,6 +354,18 @@ public class YatActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     translated.setFavorite(isFavorite);
+                }
+            });
+        }
+    }
+
+    public void changeFavorite(final int position, final boolean isFavorite) {
+        final HistoryFragment historyFragment = (HistoryFragment)getSupportFragmentManager().findFragmentByTag(HISTORY_FRAGMENT);
+        if (historyFragment != null && historyFragment.isVisible()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    historyFragment.setFavorite(position, isFavorite);
                 }
             });
         }
