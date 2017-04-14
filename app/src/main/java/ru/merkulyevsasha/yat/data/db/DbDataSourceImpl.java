@@ -98,8 +98,6 @@ public class DbDataSourceImpl extends SQLiteOpenHelper implements DbDataSource{
                 db.update(WORD_TABLE_NAME, values, "id=@id", new String[]{String.valueOf(id)});
             }
 
-            db.setTransactionSuccessful();
-
         }
         return id;
     }

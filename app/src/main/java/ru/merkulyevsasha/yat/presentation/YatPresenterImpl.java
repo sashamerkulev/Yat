@@ -1,5 +1,6 @@
 package ru.merkulyevsasha.yat.presentation;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -232,7 +233,7 @@ public class YatPresenterImpl {
                     return;
 
                 view.hideProgress();
-                onReadyHistoryFragment();
+                view.showWords(new ArrayList<Word>());
             }
 
             @Override
