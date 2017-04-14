@@ -25,11 +25,17 @@ public class YatInteractorImpl implements YatInteractor {
     }
 
     @Override
-    public void setFavorite(final int id, final boolean favorite) {
+    public void setFavorite(final int id, final YatFavoriteChangedCallback callback) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
-                repo.setFavorite(id, favorite);
+                try {
+                    boolean favorite = !repo.getFavorite(id);
+                    repo.setFavorite(id, favorite);
+                    callback.success(favorite);
+                } catch(Exception e){
+                    callback.failure(new YatInteractorException(e));
+                }
             }
         });
     }

@@ -62,20 +62,21 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                RecyclerView translates = position == 0
-                        ?(RecyclerView)history.findViewById(R.id.recyclerview)
-                        :(RecyclerView)favorite.findViewById(R.id.recyclerview);
+                if (positionOffset == 0.0F) {
+                    RecyclerView translates = position == 0
+                            ? (RecyclerView) history.findViewById(R.id.recyclerview)
+                            : (RecyclerView) favorite.findViewById(R.id.recyclerview);
 
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                translates.setLayoutManager(layoutManager);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    translates.setLayoutManager(layoutManager);
 
-                adapter = new HistoryAdapter(getActivity(), new ArrayList<Word>());
-                translates.setAdapter(adapter);
+                    adapter = new HistoryAdapter(getActivity(), new ArrayList<Word>());
+                    translates.setAdapter(adapter);
 
-                if (getActivity() instanceof onHistoryFragmentReadyListener) {
-                    ((onHistoryFragmentReadyListener)getActivity()).onReadyHistoryFragment();
+                    if (getActivity() instanceof onHistoryFragmentReadyListener) {
+                        ((onHistoryFragmentReadyListener) getActivity()).onReadyHistoryFragment();
+                    }
                 }
-
             }
 
             @Override

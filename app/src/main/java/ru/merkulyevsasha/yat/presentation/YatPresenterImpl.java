@@ -114,26 +114,9 @@ public class YatPresenterImpl {
         }
     }
 
-    void selectLanguage(int selectedLanguage){
-        TranslateState translateState = state.getTranslateState();
-        translateState.setSelectedLanguage(selectedLanguage);
-
-        if (view == null)
-            return;
-
-        view.selectLanguage(selectedLanguage);
-    }
-
-    void onTextTranslate(String text){
+    private void translate(){
         final TranslateState translateState = state.getTranslateState();
-
-        if (text.isEmpty()){
-            translateState.setText(text);
-            translateState.setWord(null);
-            return;
-        }
-
-        translateState.setText(text);
+        String text = translateState.getText();
 
         if (text.length() < 3)
             return;
@@ -142,10 +125,8 @@ public class YatPresenterImpl {
             return;
 
         view.showProgress();
-
         String language = (String) LANGUAGES.keySet().toArray()[translateState.getSelectedLanguage()];
-
-        inter.translate(text, language, "ru", new YatInteractor.YatTranslateCallback() {
+        inter.translate(translateState.getText(), language, "ru", new YatInteractor.YatTranslateCallback() {
             @Override
             public void success(Word word) {
 
@@ -166,6 +147,31 @@ public class YatPresenterImpl {
                 view.showTranslateErrorMessage();
             }
         });
+
+    }
+
+    void onSelectLanguage(int selectedLanguage){
+        TranslateState translateState = state.getTranslateState();
+        translateState.setSelectedLanguage(selectedLanguage);
+
+        if (view == null)
+            return;
+
+        translate();
+    }
+
+    void onTextTranslate(String text){
+        final TranslateState translateState = state.getTranslateState();
+
+        if (text.isEmpty()){
+            translateState.setText(text);
+            translateState.setWord(null);
+            return;
+        }
+
+        translateState.setText(text);
+
+        translate();
     }
 
     void onSelectHistoryPage(){
@@ -219,7 +225,7 @@ public class YatPresenterImpl {
     }
 
     void onDelete() {
-        HistoryState historyState = state.getHistoryState();
+        final HistoryState historyState = state.getHistoryState();
 
         if (view == null)
             return;
@@ -234,6 +240,14 @@ public class YatPresenterImpl {
 
                 view.hideProgress();
                 view.showWords(new ArrayList<Word>());
+
+                if (historyState.getSelectedPage() == HistoryState.FavoritePage){
+                    TranslateState translateState = state.getTranslateState();
+                    final Word word = translateState.getWord();
+                    if (word != null){
+                        word.setFavorite(false);
+                    }
+                }
             }
 
             @Override
@@ -251,5 +265,38 @@ public class YatPresenterImpl {
         } else {
             inter.deleteFavorites(callback);
         }
+    }
+
+    void onFavoriteChanged() {
+        TranslateState translateState = state.getTranslateState();
+        final Word word = translateState.getWord();
+
+        if (view == null || word == null || word.getId() == 0)
+            return;
+
+        view.showProgress();
+        inter.setFavorite((int)word.getId(), new YatInteractor.YatFavoriteChangedCallback() {
+            @Override
+            public void success(boolean isFavorite) {
+
+                word.setFavorite(isFavorite);
+
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                view.changeFavorite(isFavorite);
+            }
+
+            @Override
+            public void failure(Exception e) {
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+
+            }
+        });
+
     }
 }

@@ -25,7 +25,12 @@ public interface YatInteractor {
         void failure(Exception e);
     }
 
-    void setFavorite(int id, boolean favorite);
+    interface YatFavoriteChangedCallback {
+        void success(boolean isFavorite);
+        void failure(Exception e);
+    }
+
+    void setFavorite(int id, YatFavoriteChangedCallback callback);
 
     void loadHistory(YatLoadCallback callback);
     void deleteHistory(YatDeleteCallback callback);

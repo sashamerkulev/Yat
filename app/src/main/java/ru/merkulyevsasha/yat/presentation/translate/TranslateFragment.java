@@ -1,6 +1,5 @@
 package ru.merkulyevsasha.yat.presentation.translate;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.merkulyevsasha.yat.R;
 import ru.merkulyevsasha.yat.pojo.Def;
-import ru.merkulyevsasha.yat.pojo.Tr;
 import ru.merkulyevsasha.yat.pojo.Word;
 
 /**
@@ -70,8 +67,8 @@ public class TranslateFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (getActivity() instanceof OnTextComplete){
-                    ((OnTextComplete)getActivity()).onTextComplete(text.getText().toString());
+                if (getActivity() instanceof OnTextCompleteListener){
+                    ((OnTextCompleteListener)getActivity()).onTextComplete(text.getText().toString());
                 }
                 return false;
             }
@@ -83,8 +80,8 @@ public class TranslateFragment extends Fragment {
             public void onClick(View v) {
                 text.setText("");
                 setTranslates(null);
-                if (getActivity() instanceof OnTextComplete){
-                    ((OnTextComplete)getActivity()).onTextComplete(text.getText().toString());
+                if (getActivity() instanceof OnTextCompleteListener){
+                    ((OnTextCompleteListener)getActivity()).onTextComplete(text.getText().toString());
                 }
             }
         });
@@ -110,7 +107,9 @@ public class TranslateFragment extends Fragment {
         buttonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getActivity() instanceof OnFavoriteListener){
+                    ((OnFavoriteListener)getActivity()).onFavoriteChanged();
+                }
             }
         });
 
@@ -151,19 +150,30 @@ public class TranslateFragment extends Fragment {
         translatedText.setText(word.getTranslatedText());
         sourceText.setText(word.getText());
 
-        if (word.isFavorite()) {
-            buttonFavorite.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-        } else {
-            buttonFavorite.clearColorFilter();
-        }
+        setFavoriteIconColor(word.isFavorite());
 
         adapter.setItems(word.getDef());
         adapter.notifyDataSetChanged();
     }
 
-    public interface OnTextComplete{
+    private void setFavoriteIconColor(boolean isFavorite){
+        if (isFavorite) {
+            buttonFavorite.setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        } else {
+            buttonFavorite.clearColorFilter();
+        }
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        setFavoriteIconColor(isFavorite);
+    }
+
+    public interface OnTextCompleteListener {
         void onTextComplete(String text);
     }
 
+    public interface OnFavoriteListener{
+        void onFavoriteChanged();
+    }
 
 }

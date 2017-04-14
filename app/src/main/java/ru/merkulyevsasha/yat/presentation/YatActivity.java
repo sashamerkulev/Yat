@@ -30,8 +30,9 @@ import ru.merkulyevsasha.yat.presentation.translate.TranslateFragment;
 
 public class YatActivity extends AppCompatActivity
         implements HistoryFragment.onPageChangeListener
-        , TranslateFragment.OnTextComplete
-    , HistoryFragment.onHistoryFragmentReadyListener
+        , HistoryFragment.onHistoryFragmentReadyListener
+        , TranslateFragment.OnTextCompleteListener
+        , TranslateFragment.OnFavoriteListener
 {
 
     private static String TRANSLATE_FRAGMENT = "TANSLATE";
@@ -154,7 +155,7 @@ public class YatActivity extends AppCompatActivity
         }
     }
 
-    private void replaceFragment(Fragment fragment, String tag){
+    private void replaceFragmentBy(Fragment fragment, String tag){
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content, fragment, tag)
@@ -175,7 +176,7 @@ public class YatActivity extends AppCompatActivity
         itemSettings.unselect();
 
         TranslateFragment fragment = TranslateFragment.getInstance(text, word);
-        replaceFragment(fragment, TRANSLATE_FRAGMENT);
+        replaceFragmentBy(fragment, TRANSLATE_FRAGMENT);
         setActionDeleteVisible(false);
 
         titles.setLeftTitle((String) YatPresenterImpl.LANGUAGES.values().toArray()[selectedLanguage]);
@@ -188,7 +189,7 @@ public class YatActivity extends AppCompatActivity
         itemSettings.unselect();
 
         HistoryFragment fragment = HistoryFragment.getInstance(selectedPage);
-        replaceFragment(fragment, HISTORY_FRAGMENT);
+        replaceFragmentBy(fragment, HISTORY_FRAGMENT);
         setActionDeleteVisible(true);
 
         titles.setLeftAndRightTitle(getString(R.string.title_history), getString(R.string.title_favorite));
@@ -207,7 +208,7 @@ public class YatActivity extends AppCompatActivity
         itemSettings.select();
 
         SettingsFragment fragment = SettingsFragment.getInstance();
-        replaceFragment(fragment, SETTINGS_FRAGMENT);
+        replaceFragmentBy(fragment, SETTINGS_FRAGMENT);
         setActionDeleteVisible(false);
 
         titles.setLeftTitle(getString(R.string.title_settings));
@@ -228,15 +229,12 @@ public class YatActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialog, int item) {
 
                         dialog.dismiss();
-                        pres.selectLanguage(item);
+                        titles.setLeftTitle((String)YatPresenterImpl.LANGUAGES.values().toArray()[item]);
+                        pres.onSelectLanguage(item);
                     }
                 });
 
         builder.create().show();
-    }
-
-    public void selectLanguage(int selectedLanguage){
-        titles.setLeftTitle((String)YatPresenterImpl.LANGUAGES.values().toArray()[selectedLanguage]);
     }
 
     public void selectHistoryPage(){
@@ -332,5 +330,22 @@ public class YatActivity extends AppCompatActivity
                 Snackbar.make(container, R.string.error_delete_message, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onFavoriteChanged() {
+        pres.onFavoriteChanged();
+    }
+
+    public void changeFavorite(final boolean isFavorite) {
+        final TranslateFragment translated = (TranslateFragment)getSupportFragmentManager().findFragmentByTag(TRANSLATE_FRAGMENT);
+        if (translated != null && translated.isVisible()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    translated.setFavorite(isFavorite);
+                }
+            });
+        }
     }
 }
