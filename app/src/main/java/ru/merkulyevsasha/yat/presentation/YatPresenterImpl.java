@@ -249,10 +249,13 @@ public class YatPresenterImpl {
                 view.hideProgress();
                 view.showWords(new ArrayList<Word>());
 
-                if (historyState.getSelectedPage() == HistoryState.FavoritePage) {
-                    TranslateState translateState = state.getTranslateState();
-                    final Word word = translateState.getWord();
-                    if (word != null) {
+                TranslateState translateState = state.getTranslateState();
+                final Word word = translateState.getWord();
+                if (word != null && word.getId() > 0) {
+                    if (historyState.getSelectedPage() == HistoryState.FavoritePage) {
+                        word.setFavorite(false);
+                    } else {
+                        word.setId(0);
                         word.setFavorite(false);
                     }
                 }

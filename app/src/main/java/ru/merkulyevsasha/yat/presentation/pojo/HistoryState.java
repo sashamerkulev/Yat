@@ -6,8 +6,8 @@ package ru.merkulyevsasha.yat.presentation.pojo;
 
 public class HistoryState {
 
-    public static final int HistoryPage = 1;
-    public static final int FavoritePage = 2;
+    public static final int HistoryPage = 0;
+    public static final int FavoritePage = 1;
 
 
     private int selectedPage;
@@ -18,8 +18,8 @@ public class HistoryState {
     public HistoryState(int selectedPage){
         this.selectedPage = selectedPage;
         searchText = new String[2];
-        searchText[0] = "";
-        searchText[1] = "";
+        searchText[HistoryPage] = "";
+        searchText[FavoritePage] = "";
     }
 
     public int getSelectedPage() {
@@ -31,10 +31,10 @@ public class HistoryState {
     }
 
     public void setSearchText(String text) {
-        searchText[selectedPage-1] = text;
+        searchText[selectedPage] = text;
     }
 
     public String getSearchText(){
-        return searchText[selectedPage-1];
+        return searchText[selectedPage];
     }
 }

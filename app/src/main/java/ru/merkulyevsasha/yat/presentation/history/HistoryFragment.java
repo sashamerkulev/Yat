@@ -25,8 +25,7 @@ public class HistoryFragment extends Fragment {
     public static final String KEY_SEARCHTEXT = "SEARCHTEXT";
 
     ViewPager pager;
-    HistoryFragmentPage pageHistory;
-    HistoryFragmentPage pageFavorites;
+    HistoryFragmentPage[] fragmentPages;
 
     public static HistoryFragment getInstance(int page, String searchText){
 
@@ -76,10 +75,10 @@ public class HistoryFragment extends Fragment {
                 }
             }
         };
-
-        pageHistory = new HistoryFragmentPage(getActivity(), history, getString(R.string.search_text_history_hint),
+        fragmentPages = new HistoryFragmentPage[2];
+        fragmentPages[HistoryState.HistoryPage] = new HistoryFragmentPage(getActivity(), history, getString(R.string.search_text_history_hint),
                 onItemClickListener, onSearchListener, onFavoriteIconListener);
-        pageFavorites = new HistoryFragmentPage(getActivity(), favorite, getString(R.string.search_text_favorites_hint),
+        fragmentPages[HistoryState.FavoritePage] = new HistoryFragmentPage(getActivity(), favorite, getString(R.string.search_text_favorites_hint),
                 onItemClickListener, onSearchListener, onFavoriteIconListener);
 
         List<View> pages = new ArrayList<>();
@@ -112,13 +111,8 @@ public class HistoryFragment extends Fragment {
         Bundle args = getArguments();
         String searchText = args.getString(KEY_SEARCHTEXT);
         int page = args.getInt(KEY_PAGE);
-        if (page == HistoryState.HistoryPage){
-            selectHistoryPage();
-            pageHistory.setSearchText(searchText);
-        } else if (page == HistoryState.FavoritePage){
-            selectFavoritPage();
-            pageFavorites.setSearchText(searchText);
-        }
+        fragmentPages[page].setSearchText(searchText);
+        pager.setCurrentItem(page);
 
         return rootView;
     }
@@ -129,19 +123,15 @@ public class HistoryFragment extends Fragment {
     }
 
     public void selectHistoryPage(){
-        pager.setCurrentItem(0);
+        pager.setCurrentItem(HistoryState.HistoryPage);
     }
 
     public void selectFavoritPage(){
-        pager.setCurrentItem(1);
+        pager.setCurrentItem(HistoryState.FavoritePage);
     }
 
     public void showWords(List<Word> words) {
-        if (pager.getCurrentItem() == 0) {
-            pageHistory.showWords(words);
-        } else {
-            pageFavorites.showWords(words);
-        }
+        fragmentPages[pager.getCurrentItem()].showWords(words);
     }
 
     private void onSearchHistory(String text){
@@ -151,10 +141,10 @@ public class HistoryFragment extends Fragment {
     }
 
     public void setFavorite(int position, boolean isFavorite) {
-        if (pager.getCurrentItem() == 0) {
-            pageHistory.changeItem(position, isFavorite);
+        if (pager.getCurrentItem() == HistoryState.HistoryPage) {
+            fragmentPages[HistoryState.HistoryPage].changeItem(position, isFavorite);
         } else {
-            pageFavorites.removeItem(position);
+            fragmentPages[HistoryState.FavoritePage].removeItem(position);
         }
     }
 
