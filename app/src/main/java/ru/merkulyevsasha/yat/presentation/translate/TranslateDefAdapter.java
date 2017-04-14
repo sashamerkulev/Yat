@@ -52,7 +52,7 @@ public class TranslateDefAdapter extends RecyclerView.Adapter<TranslateDefAdapte
         return mList.size();
     }
 
-    public void setItems(List<Def> items){
+    void setItems(List<Def> items){
         mList = items;
     }
 
@@ -60,12 +60,12 @@ public class TranslateDefAdapter extends RecyclerView.Adapter<TranslateDefAdapte
         void onItemClick(Def item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView pos;
         final RecyclerView tr;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             pos = (TextView)itemView.findViewById(R.id.textview_pos);

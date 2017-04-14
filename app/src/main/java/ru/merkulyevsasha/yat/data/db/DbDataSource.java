@@ -22,4 +22,7 @@ public interface DbDataSource {
     void deleteHistory();
     List<Word> getFavorites();
     void deleteFavorites();
+
+    List<Word> searchHistory(String text);
+    List<Word> searchFavorites(String text);
 }

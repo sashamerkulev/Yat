@@ -24,7 +24,7 @@ public class TranslateTrAdapter extends RecyclerView.Adapter<TranslateTrAdapter.
     private Context mContext;
     private List<Tr> mList;
 
-    public TranslateTrAdapter(Context context, List<Tr> list) {
+    TranslateTrAdapter(Context context, List<Tr> list) {
         this.mContext = context;
         this.mList = list;
     }
@@ -84,14 +84,14 @@ public class TranslateTrAdapter extends RecyclerView.Adapter<TranslateTrAdapter.
         void onItemClick(Tr item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView number;
         final TextView text;
         final TextView description;
 
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             number = (TextView)itemView.findViewById(R.id.textview_rownumber);

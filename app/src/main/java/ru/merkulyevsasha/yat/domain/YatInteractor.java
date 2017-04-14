@@ -39,4 +39,7 @@ public interface YatInteractor {
 
     void translate(String word, String language, final String ui, YatTranslateCallback callback);
 
+    void searchHistory(String text, YatLoadCallback callback);
+    void searchFavorites(String text, YatLoadCallback callback);
+
 }

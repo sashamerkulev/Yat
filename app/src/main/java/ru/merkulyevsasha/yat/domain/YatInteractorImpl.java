@@ -140,4 +140,38 @@ public class YatInteractorImpl implements YatInteractor {
         });
 
     }
+
+    @Override
+    public void searchHistory(final String text, final YatLoadCallback callback) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try{
+
+                    List<Word> items = repo.searchHistory(text);
+                    callback.success(items);
+
+                } catch(Exception e){
+                    callback.failure(e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void searchFavorites(final String text, final YatLoadCallback callback) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try{
+
+                    List<Word> items = repo.searchFavorites(text);
+                    callback.success(items);
+
+                } catch(Exception e){
+                    callback.failure(e);
+                }
+            }
+        });
+    }
 }

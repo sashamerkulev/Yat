@@ -33,6 +33,7 @@ public class YatActivity extends AppCompatActivity
         implements HistoryFragment.onPageChangeListener
         , HistoryFragment.onHistoryFragmentReadyListener
         , HistoryFragment.onHistoryItemClickListener
+        , HistoryFragment.onSearchListener
         , TranslateFragment.OnTextCompleteListener
         , TranslateFragment.OnFavoriteListener
         , TranslateFragment.OnFullscrrenButtonListener
@@ -362,5 +363,15 @@ public class YatActivity extends AppCompatActivity
     @Override
     public void onFullscreenButtonClick(int fullscreen) {
         pres.onFullscreen(fullscreen);
+    }
+
+    @Override
+    public void onSearchHistory(String text) {
+        pres.onSearch(text);
+    }
+
+    @Override
+    public void onSearchFavorites(String text) {
+        pres.onSearch(text);
     }
 }

@@ -65,7 +65,8 @@ public class YatPresenterImpl {
 
         state.setFragments(StatePresenter.Fragments.Translate);
         TranslateState translateState = state.getTranslateState();
-        view.showTranslateFragment(translateState.getSelectedLanguage(), translateState.getText(), translateState.getWord(), translateState.getFullscreen());
+        view.showTranslateFragment(translateState.getSelectedLanguage(), translateState.getText(),
+                translateState.getWord(), translateState.getFullscreen());
     }
 
     void onHistoryFragmentSelected(){
@@ -303,6 +304,42 @@ public class YatPresenterImpl {
     void onFullscreen(int fullscreen) {
         TranslateState translateState = state.getTranslateState();
         translateState.setFullscreen(fullscreen);
+    }
+
+    void onSearch(String text){
+        final HistoryState historyState = state.getHistoryState();
+        historyState.setSearchText(text);
+
+        if (view == null)
+            return;
+
+        YatInteractor.YatLoadCallback callback = new YatInteractor.YatLoadCallback() {
+            @Override
+            public void success(List<Word> word) {
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                view.showWords(word);
+            }
+
+            @Override
+            public void failure(Exception e) {
+                if (view == null)
+                    return;
+
+                view.hideProgress();
+                view.showLoadErrorMessage();
+            }
+        };
+
+        view.showProgress();
+        if (historyState.getSelectedPage() == HistoryState.HistoryPage){
+            inter.searchHistory(text, callback);
+        } else {
+            inter.searchFavorites(text, callback);
+        }
+
     }
 
 }

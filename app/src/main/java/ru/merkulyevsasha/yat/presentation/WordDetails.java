@@ -10,10 +10,7 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import ru.merkulyevsasha.yat.R;
-import ru.merkulyevsasha.yat.pojo.Def;
 import ru.merkulyevsasha.yat.pojo.Word;
 import ru.merkulyevsasha.yat.presentation.translate.TranslateDefAdapter;
 

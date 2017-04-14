@@ -24,4 +24,7 @@ public interface YatRepository {
     List<Word> getFavorites();
     void deleteFavorites();
 
+    List<Word> searchHistory(String text);
+    List<Word> searchFavorites(String text);
+
 }

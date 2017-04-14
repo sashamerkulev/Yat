@@ -6,9 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,11 @@ public class HistoryFragment extends Fragment {
     HistoryAdapter adapterHistory;
     HistoryAdapter adapterFavorites;
     ViewPager pager;
+
+    EditText searchHistory;
+    EditText searchFavorites;
+    ImageView searchButtonHistory;
+    ImageView searchButtonFavorites;
 
     public static HistoryFragment getInstance(int page){
 
@@ -52,6 +61,40 @@ public class HistoryFragment extends Fragment {
 
         final View favorite = inflater.inflate(R.layout.page_favorite, null);
         final View history = inflater.inflate(R.layout.page_history, null);
+
+        searchHistory = (EditText)history.findViewById(R.id.edittext_searchtext);
+        searchHistory.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                onSearchHistory(searchHistory.getText().toString());
+                return false;
+            }
+        });
+
+        searchFavorites = (EditText)favorite.findViewById(R.id.edittext_searchtext);
+        searchFavorites.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                onSearchFavorites(searchFavorites.getText().toString());
+                return false;
+            }
+        });
+
+        searchButtonHistory = (ImageView)history.findViewById(R.id.imageview_search);
+        searchButtonHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchHistory(searchHistory.getText().toString());
+            }
+        });
+
+        searchButtonFavorites = (ImageView)favorite.findViewById(R.id.imageview_search);
+        searchButtonFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchFavorites(searchFavorites.getText().toString());
+            }
+        });
 
         RecyclerView translatesHistory = (RecyclerView) history.findViewById(R.id.recyclerview);
         RecyclerView translatesFavorites = (RecyclerView) favorite.findViewById(R.id.recyclerview);
@@ -140,6 +183,18 @@ public class HistoryFragment extends Fragment {
         }
     }
 
+    private void onSearchHistory(String text){
+        if (getActivity() instanceof onSearchListener){
+            ((onSearchListener)getActivity()).onSearchHistory(text);
+        }
+    }
+
+    private void onSearchFavorites(String text){
+        if (getActivity() instanceof onSearchListener){
+            ((onSearchListener)getActivity()).onSearchFavorites(text);
+        }
+    }
+
     public interface onPageChangeListener {
         void onPageSelected(int position);
     }
@@ -151,5 +206,11 @@ public class HistoryFragment extends Fragment {
     public interface onHistoryItemClickListener{
         void onItemClick(Word item);
     }
+
+    public interface onSearchListener{
+        void onSearchHistory(String text);
+        void onSearchFavorites(String text);
+    }
+
 
 }

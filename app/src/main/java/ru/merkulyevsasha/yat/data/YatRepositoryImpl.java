@@ -81,5 +81,15 @@ public class YatRepositoryImpl implements YatRepository{
         db.deleteFavorites();
     }
 
+    @Override
+    public List<Word> searchHistory(String text) {
+        return db.searchHistory(text);
+    }
+
+    @Override
+    public List<Word> searchFavorites(String text) {
+        return db.searchFavorites(text);
+    }
+
 
 }
