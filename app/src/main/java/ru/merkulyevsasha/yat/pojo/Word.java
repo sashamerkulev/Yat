@@ -1,5 +1,8 @@
 package ru.merkulyevsasha.yat.pojo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +19,8 @@ public class Word implements Serializable{
     private String translatedText;
     private String json;
     private boolean favorite;
+    @SerializedName("def")
+    @Expose
     private List<Def> def;
 
     public long getId() {

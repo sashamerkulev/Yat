@@ -1,5 +1,8 @@
 package ru.merkulyevsasha.yat.pojo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,10 +12,20 @@ import java.util.List;
 
 public class Tr implements Serializable {
 
+    @SerializedName("text")
+    @Expose
     private String text;
+    @SerializedName("pos")
+    @Expose
     private String pos;
+    @SerializedName("syn")
+    @Expose
     private List<Syn> syn;
+    @SerializedName("mean")
+    @Expose
     private List<Mean> mean;
+    @SerializedName("ex")
+    @Expose
     private List<Ex> ex;
 
     public String getText() {
