@@ -114,8 +114,19 @@ public class YatPresenterImpl {
 
         state.setFragments(StatePresenter.Fragments.Translate);
         TranslateState translateState = state.getTranslateState();
+
+        Word word = translateState.getWord();
+        if (word != null) {
+            if (word.getTranslatedText()!= null && !word.getTranslatedText().isEmpty() ) {
+                ttsTranslatedText = new TextToSpeech(view, onTranslatedTextInitListener);
+            }
+            if (word.getText()!= null && !word.getText().isEmpty() ) {
+                ttsText = new TextToSpeech(view, onTextInitListener);
+            }
+        }
+
         view.showTranslateFragment(translateState.getSelectedLanguage(), translateState.getText(),
-                translateState.getWord(), translateState.getFullscreen());
+                word, translateState.getFullscreen());
     }
 
     void onHistoryFragmentSelected() {
