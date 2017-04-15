@@ -18,4 +18,11 @@
     <string name="recognition_network_error_message">Network Error</string>
     <string name="recognition_no_match_message">No Match</string>
     <string name="recognition_server_error_message">Server Error</string>
+
+    <string name="clear_icon">Clear</string>
+    <string name="recognition_icon">Recognition</string>
+    <string name="texttospeech_icon">Text to speech</string>
+    <string name="favorite_icon">Add to favorite</string>
+    <string name="fullscreen_icon">Fullscreen</string>
+    <string name="search_icon">Search</string>
 </resources>

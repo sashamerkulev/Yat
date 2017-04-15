@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HistoryPagerAdapter extends PagerAdapter {
 
-    private List<View> pages;
+    private final List<View> pages;
 
     public HistoryPagerAdapter(List<View> pages){
         this.pages = pages;

@@ -17,8 +17,8 @@ import ru.merkulyevsasha.yat.R;
 
 public class ToolbarTitles extends LinearLayout {
 
-    private TextView title1;
-    private TextView title2;
+    private final TextView title1;
+    private final TextView title2;
 
     private onTitleClickListener listener;
 

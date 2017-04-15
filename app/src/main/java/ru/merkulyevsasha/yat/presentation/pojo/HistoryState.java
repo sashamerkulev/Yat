@@ -12,7 +12,7 @@ public class HistoryState {
 
     private int selectedPage;
 
-    private String[] searchText;
+    private final String[] searchText;
 
 
     public HistoryState(int selectedPage){

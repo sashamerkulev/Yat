@@ -16,6 +16,7 @@
         android:tint="@color/gray"
         android:layout_marginLeft="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/favorite_icon"
         />
 
     <TextView
@@ -25,7 +26,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:text="streamline"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_toRightOf="@+id/imageview_favorite"
@@ -39,7 +39,6 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="8dp"
-        android:text="оптимизация"
         android:textSize="18sp"
         android:textColor="@color/gray"
         android:layout_toRightOf="@+id/imageview_favorite"
@@ -51,7 +50,6 @@
         android:id="@+id/textview_lang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RU-ENG"
         android:textColor="@color/gray"
         android:textAllCaps="true"
         android:layout_alignParentRight="true"

@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -48,9 +47,9 @@ public class YatActivity extends AppCompatActivity
 {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
-    private static String TRANSLATE_FRAGMENT = "TANSLATE";
-    private static String HISTORY_FRAGMENT = "HISTORY";
-    private static String SETTINGS_FRAGMENT = "SETTINGS";
+    private static final String TRANSLATE_FRAGMENT = "TANSLATE";
+    private static final String HISTORY_FRAGMENT = "HISTORY";
+    private static final String SETTINGS_FRAGMENT = "SETTINGS";
 
     private MenuItem actionDelete;
 

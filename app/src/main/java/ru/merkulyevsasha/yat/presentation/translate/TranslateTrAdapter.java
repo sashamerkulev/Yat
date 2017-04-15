@@ -21,7 +21,7 @@ import ru.merkulyevsasha.yat.pojo.Tr;
 public class TranslateTrAdapter extends RecyclerView.Adapter<TranslateTrAdapter.ViewHolder> {
 
     private static final String TAG = TranslateTrAdapter.class.getSimpleName();
-    private Context mContext;
+    private final Context mContext;
     private List<Tr> mList;
 
     TranslateTrAdapter(Context context, List<Tr> list) {

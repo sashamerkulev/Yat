@@ -21,11 +21,9 @@ import ru.merkulyevsasha.yat.pojo.Word;
 
 class HistoryFragmentPage {
 
-    private HistoryAdapter adapter;
+    private final HistoryAdapter adapter;
 
-    private EditText edittextSearch;
-    private ImageView butonSearch;
-    private ImageView buttonClear;
+    private final EditText edittextSearch;
 
     HistoryFragmentPage(Context context, View view, String hint,
                                final HistoryAdapter.OnItemClickListener itemClickListener,
@@ -42,7 +40,7 @@ class HistoryFragmentPage {
             }
         });
 
-        buttonClear = (ImageView)view.findViewById(R.id.imageview_clear);
+        ImageView buttonClear = (ImageView) view.findViewById(R.id.imageview_clear);
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +48,7 @@ class HistoryFragmentPage {
                 onSearchListener.onSearch(edittextSearch.getText().toString());
             }
         });
-        butonSearch = (ImageView)view.findViewById(R.id.imageview_search);
+        ImageView butonSearch = (ImageView) view.findViewById(R.id.imageview_search);
         butonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

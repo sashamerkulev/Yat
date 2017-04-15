@@ -33,10 +33,6 @@ public class TranslateFragment extends Fragment {
     private View layoutText;
 
     private EditText text;
-    private ImageButton buttonClear;
-    private ImageButton buttonMicrophone;
-    private ImageButton buttonSpeakSource;
-    private ImageButton buttonSpeakTranslated;
     private ImageButton buttonFavorite;
     private ImageButton buttonFullscreen;
 
@@ -79,7 +75,7 @@ public class TranslateFragment extends Fragment {
             }
         });
 
-        buttonClear = (ImageButton)view.findViewById(R.id.clear);
+        ImageButton buttonClear = (ImageButton) view.findViewById(R.id.clear);
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +87,7 @@ public class TranslateFragment extends Fragment {
             }
         });
 
-        buttonMicrophone = (ImageButton)view.findViewById(R.id.microphone);
+        ImageButton buttonMicrophone = (ImageButton) view.findViewById(R.id.microphone);
         buttonMicrophone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +97,7 @@ public class TranslateFragment extends Fragment {
             }
         });
 
-        buttonSpeakSource = (ImageButton)view.findViewById(R.id.speek_source);
+        ImageButton buttonSpeakSource = (ImageButton) view.findViewById(R.id.speek_source);
         buttonSpeakSource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +110,7 @@ public class TranslateFragment extends Fragment {
             }
         });
 
-        buttonSpeakTranslated = (ImageButton)view.findViewById(R.id.speek_dest);
+        ImageButton buttonSpeakTranslated = (ImageButton) view.findViewById(R.id.speek_dest);
         buttonSpeakTranslated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

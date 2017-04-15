@@ -16,8 +16,8 @@ import ru.merkulyevsasha.yat.pojo.Word;
 
 public class YatInteractorImpl implements YatInteractor {
 
-    private YatRepository repo;
-    private ExecutorService executor;
+    private final YatRepository repo;
+    private final ExecutorService executor;
 
     public YatInteractorImpl(ExecutorService executor, YatRepository repo){
         this.repo = repo;

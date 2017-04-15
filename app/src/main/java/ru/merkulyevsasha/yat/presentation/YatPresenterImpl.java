@@ -20,7 +20,7 @@ import ru.merkulyevsasha.yat.presentation.pojo.TranslateState;
 
 public class YatPresenterImpl {
 
-    public static final LinkedHashMap<String, String> LANGUAGES = new LinkedHashMap<String, String>();
+    public static final LinkedHashMap<String, String> LANGUAGES = new LinkedHashMap<>();
 
     static {
         LANGUAGES.put("ru-en", "Русский -> Английский");
@@ -45,7 +45,7 @@ public class YatPresenterImpl {
         return new Locale("ru");
     }
 
-    private TextToSpeech.OnInitListener onTextInitListener = new TextToSpeech.OnInitListener() {
+    private final TextToSpeech.OnInitListener onTextInitListener = new TextToSpeech.OnInitListener() {
         @Override
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS) {
@@ -62,7 +62,7 @@ public class YatPresenterImpl {
         }
     };
 
-    private TextToSpeech.OnInitListener onTranslatedTextInitListener = new TextToSpeech.OnInitListener() {
+    private final TextToSpeech.OnInitListener onTranslatedTextInitListener = new TextToSpeech.OnInitListener() {
         @Override
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS) {

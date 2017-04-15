@@ -17,13 +17,13 @@
         android:layout_centerVertical="true"
         android:layout_margin="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/search_icon"
         />
 
     <EditText
         android:id="@+id/edittext_searchtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Найти в истории"
         android:layout_toRightOf="@+id/imageview_search"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
@@ -44,6 +44,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/clear_icon"
         />
 
 

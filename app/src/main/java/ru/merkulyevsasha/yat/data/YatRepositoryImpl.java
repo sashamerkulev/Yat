@@ -16,8 +16,8 @@ import ru.merkulyevsasha.yat.pojo.Word;
 
 public class YatRepositoryImpl implements YatRepository{
 
-    private DbDataSource db;
-    private HttpDataSource http;
+    private final DbDataSource db;
+    private final HttpDataSource http;
 
     public YatRepositoryImpl(DbDataSource db, HttpDataSource http){
         this.db = db;

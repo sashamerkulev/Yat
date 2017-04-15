@@ -19,7 +19,7 @@ import ru.merkulyevsasha.yat.pojo.Def;
 public class TranslateDefAdapter extends RecyclerView.Adapter<TranslateDefAdapter.ViewHolder> {
 
     private static final String TAG = TranslateDefAdapter.class.getSimpleName();
-    private Context mContext;
+    private final Context mContext;
     private List<Def> mList;
 
     public TranslateDefAdapter(Context context, List<Def> list) {
