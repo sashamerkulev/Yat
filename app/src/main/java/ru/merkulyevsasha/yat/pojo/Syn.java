@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Syn implements Serializable {
 
-    @SerializedName("tr")
+    @SerializedName("text")
     @Expose
     private String text;
 
