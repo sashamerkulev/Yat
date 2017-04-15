@@ -11,4 +11,11 @@
     <string name="error_delete_message">Ошибка удаления истории/избраного</string>
     <string name="search_text_history_hint">Найти в истории</string>
     <string name="search_text_favorites_hint">Найти в избранном</string>
+    <string name="error_tts_message">Локаль озвучания не поддерживается</string>
+    <string name="voice_recognition_error_message">Распознаватель голоса отсутствует</string>
+    <string name="recognition_audio_error_message">Audio Error</string>
+    <string name="recognition_client_error_message">Client Error</string>
+    <string name="recognition_network_error_message">Network Error</string>
+    <string name="recognition_no_match_message">No Match</string>
+    <string name="recognition_server_error_message">Server Error</string>
 </resources>

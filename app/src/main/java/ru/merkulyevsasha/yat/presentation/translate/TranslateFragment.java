@@ -72,7 +72,6 @@ public class TranslateFragment extends Fragment {
         text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                 if (getActivity() instanceof OnTextCompleteListener){
                     ((OnTextCompleteListener)getActivity()).onTextComplete(text.getText().toString());
                 }
@@ -93,6 +92,15 @@ public class TranslateFragment extends Fragment {
         });
 
         buttonMicrophone = (ImageButton)view.findViewById(R.id.microphone);
+        buttonMicrophone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() instanceof OnTextSpeechRecognitionListener){
+                    ((OnTextSpeechRecognitionListener)getActivity()).onTextRecognition();
+                }
+            }
+        });
+
         buttonSpeakSource = (ImageButton)view.findViewById(R.id.speek_source);
         buttonSpeakSource.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +225,13 @@ public class TranslateFragment extends Fragment {
         setFavoriteIconColor(isFavorite);
     }
 
+    public void setRecognitionText(String text) {
+        this.text.setText(text);
+        if (getActivity() instanceof OnTextCompleteListener){
+            ((OnTextCompleteListener)getActivity()).onTextComplete(text);
+        }
+    }
+
     public interface OnTextCompleteListener {
         void onTextComplete(String text);
     }
@@ -232,6 +247,10 @@ public class TranslateFragment extends Fragment {
     public interface OnTextToSpeechListener {
         void onTextToSpeech(String text);
         void onTranslatedTextToSpeech(String text);
+    }
+
+    public interface OnTextSpeechRecognitionListener{
+        void onTextRecognition();
     }
 
 }

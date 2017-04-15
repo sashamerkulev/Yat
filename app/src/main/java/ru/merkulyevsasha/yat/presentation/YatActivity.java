@@ -3,8 +3,10 @@ package ru.merkulyevsasha.yat.presentation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,10 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -41,7 +44,9 @@ public class YatActivity extends AppCompatActivity
         , TranslateFragment.OnFavoriteListener
         , TranslateFragment.OnFullscrrenButtonListener
         , TranslateFragment.OnTextToSpeechListener
+        , TranslateFragment.OnTextSpeechRecognitionListener
 {
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
     private static String TRANSLATE_FRAGMENT = "TANSLATE";
     private static String HISTORY_FRAGMENT = "HISTORY";
@@ -405,8 +410,64 @@ public class YatActivity extends AppCompatActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(container, "sorry ", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(container, R.string.error_tts_message, Snackbar.LENGTH_LONG).show();
             }
         });
     }
+
+    @Override
+    public void onTextRecognition() {
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Snackbar.make(container, R.string.voice_recognition_error_message, Snackbar.LENGTH_LONG).show();
+                }
+            });
+            return;
+        }
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        // Specify the calling package to identify your application
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass().getPackage().getName());
+        // Display an hint to the user about what he should say.
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.promt_text));
+        // Given an hint to the recognizer about what the user is going to say
+        //There are two form of language model available
+        //1.LANGUAGE_MODEL_WEB_SEARCH : For short phrases
+        //2.LANGUAGE_MODEL_FREE_FORM  : If not sure about the words or phrases and its domain.
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        //Start the Voice recognizer activity for the result.
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE)
+        //If Voice recognition is successful then it returns RESULT_OK
+        if(resultCode == RESULT_OK) {
+            final ArrayList<String> textMatchList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (!textMatchList.isEmpty()) {
+                final TranslateFragment translated = (TranslateFragment)getSupportFragmentManager().findFragmentByTag(TRANSLATE_FRAGMENT);
+                if (translated != null && translated.isVisible()) {
+                    translated.setRecognitionText(textMatchList.get(0));
+                }
+            }
+        } else if(resultCode == RecognizerIntent.RESULT_AUDIO_ERROR){
+            Snackbar.make(container, R.string.recognition_audio_error_message, Snackbar.LENGTH_LONG).show();
+        } else if(resultCode == RecognizerIntent.RESULT_CLIENT_ERROR){
+            Snackbar.make(container, R.string.recognition_client_error_message, Snackbar.LENGTH_LONG).show();
+        } else if(resultCode == RecognizerIntent.RESULT_NETWORK_ERROR){
+            Snackbar.make(container, R.string.recognition_network_error_message, Snackbar.LENGTH_LONG).show();
+        } else if(resultCode == RecognizerIntent.RESULT_NO_MATCH){
+            Snackbar.make(container, R.string.recognition_no_match_message, Snackbar.LENGTH_LONG).show();
+        } else if(resultCode == RecognizerIntent.RESULT_SERVER_ERROR){
+            Snackbar.make(container, R.string.recognition_server_error_message, Snackbar.LENGTH_LONG).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
 }
