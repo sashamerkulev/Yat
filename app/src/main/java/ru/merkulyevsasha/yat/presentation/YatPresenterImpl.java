@@ -449,14 +449,12 @@ public class YatPresenterImpl {
     }
 
     void onTranslatedTextToSpeech(String text) {
-        //ttsTranslatedText = new TextToSpeech(view, onTranslatedTextInitListener);
         if (ttsTranslatedText != null)
             ttsTranslatedText.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         //mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
     }
 
     void onTextToSpeech(String text) {
-        //ttsText = new TextToSpeech(view, onTextInitListener);
         if (ttsText !=null)
             ttsText.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         //mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);

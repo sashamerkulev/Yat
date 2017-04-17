@@ -48,7 +48,7 @@ public class HistoryFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
-        final View favorite = inflater.inflate(R.layout.page_favorite, null);
+        final View favorite = inflater.inflate(R.layout.page_history, null);
         final View history = inflater.inflate(R.layout.page_history, null);
 
         HistoryAdapter.OnItemClickListener onItemClickListener = new HistoryAdapter.OnItemClickListener() {
