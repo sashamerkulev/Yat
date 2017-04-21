@@ -136,7 +136,18 @@ public class YatInteractorImpl implements YatInteractor {
                             callback.failure(new YatInteractorException());
                         }
                     } else {
-                        callback.success(item);
+                        Gson gson = new Gson();
+                        Word word = gson.fromJson(item.getJson(), Word.class);
+                        List<Def> def = word.getDef();
+                        if (def.size() > 0) {
+                            String translatedText = def.get(0).getTr().get(0).getText();
+                            word.setText(text);
+                            word.setTranslatedText(translatedText);
+                            word.setLanguage(language);
+                            word.setFavorite(repo.getFavorite((int) item.getId()));
+                            word.setId(item.getId());
+                            callback.success(word);
+                        }
                     }
                 } catch(Exception e){
                     callback.failure(new YatInteractorException(e));
