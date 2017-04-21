@@ -104,6 +104,14 @@ public class YatInteractorImpl implements YatInteractor {
         });
     }
 
+    private void setWord(Word word, String text, String translatedText, String language, int id){
+        word.setText(text);
+        word.setTranslatedText(translatedText);
+        word.setLanguage(language);
+        word.setFavorite(repo.getFavorite(id));
+        word.setId(id);
+    }
+
     @Override
     public void translate(final String text, final String language, final String ui, final YatTranslateCallback callback) {
 
@@ -113,41 +121,29 @@ public class YatInteractorImpl implements YatInteractor {
                 try {
 
                     Word item = repo.findWord(text, language);
+                    Gson gson = new Gson();
                     if (item == null) {
                         Trans result = repo.translate(text, language, ui);
                         if (result == null) {
                             callback.failure(new YatInteractorException());
                             return;
                         }
-                        Gson gson = new Gson();
                         Word word = gson.fromJson(result.getJson(), Word.class);
                         List<Def> def = word.getDef();
                         if (def.size() > 0){
                             String translatedText = def.get(0).getTr().get(0).getText();
                             int id = repo.saveHistory(result, translatedText);
-                            word.setText(text);
-                            word.setTranslatedText(translatedText);
-                            word.setLanguage(language);
-                            word.setFavorite(repo.getFavorite(id));
-                            word.setId(id);
+                            setWord(word, text, translatedText, language, id);
                             callback.success(word);
 
                         } else {
                             callback.failure(new YatInteractorException());
                         }
                     } else {
-                        Gson gson = new Gson();
                         Word word = gson.fromJson(item.getJson(), Word.class);
                         List<Def> def = word.getDef();
-                        if (def.size() > 0) {
-                            String translatedText = def.get(0).getTr().get(0).getText();
-                            word.setText(text);
-                            word.setTranslatedText(translatedText);
-                            word.setLanguage(language);
-                            word.setFavorite(repo.getFavorite((int) item.getId()));
-                            word.setId(item.getId());
-                            callback.success(word);
-                        }
+                        setWord(word, text, def.get(0).getTr().get(0).getText(), language, (int) item.getId());
+                        callback.success(word);
                     }
                 } catch(Exception e){
                     callback.failure(new YatInteractorException(e));
