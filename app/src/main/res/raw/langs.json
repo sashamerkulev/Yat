@@ -1,0 +1,34 @@
+[
+  {
+    "lang": "ru-en",
+    "landDisplay": "Russian -> English"
+  },
+  {
+    "lang": "en-ru",
+    "landDisplay": "English -> Russian"
+  },
+  {
+    "lang": "ru-fr",
+    "landDisplay": "Russian -> French"
+  },
+  {
+    "lang": "fr-ru",
+    "landDisplay": "French -> Russian"
+  },
+  {
+    "lang": "ru-de",
+    "landDisplay": "Russian -> German"
+  },
+  {
+    "lang": "de-ru",
+    "landDisplay": "German -> Russian"
+  },
+  {
+    "lang": "ru-it",
+    "landDisplay": "Russian -> Italian"
+  },
+  {
+    "lang": "it-ru",
+    "landDisplay": "Italian -> Russian"
+  }
+]

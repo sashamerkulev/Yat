@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Яндекс Переводчик</string>
+    <string name="app_name">Словарь-Переводчик</string>
     <string name="title_translate">Перевести</string>
     <string name="title_history">История</string>
     <string name="title_favorite">Избранное</string>
@@ -25,5 +25,8 @@
     <string name="favorite_icon">В избранное</string>
     <string name="fullscreen_icon">На весь экран</string>
     <string name="search_icon">Поиск</string>
-
+    <string name="delete_dialog_title">Удаление</string>
+    <string name="delete_dialog_message">Удалить?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

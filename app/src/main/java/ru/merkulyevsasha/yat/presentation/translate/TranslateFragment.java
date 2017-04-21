@@ -177,7 +177,7 @@ public class TranslateFragment extends Fragment {
     }
 
     public void setTranslates(Word word){
-        if (word == null || word.getDef().size() == 0) {
+        if (word == null || word.getDef() == null || word.getDef().size() == 0) {
 
             sourceText.setText("");
             translatedText.setText("");

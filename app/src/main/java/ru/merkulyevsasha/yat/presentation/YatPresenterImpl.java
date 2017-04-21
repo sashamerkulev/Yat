@@ -20,14 +20,7 @@ import ru.merkulyevsasha.yat.presentation.pojo.TranslateState;
 
 public class YatPresenterImpl {
 
-    public static final LinkedHashMap<String, String> LANGUAGES = new LinkedHashMap<>();
-
-    static {
-        LANGUAGES.put("ru-en", "Русский -> Английский");
-        LANGUAGES.put("en-ru", "Английский -> Русский");
-        LANGUAGES.put("ru-fr", "Русский -> Французский");
-        LANGUAGES.put("fr-ru", "Французский -> Русский");
-    }
+    public static LinkedHashMap<String, String> LANGUAGES = new LinkedHashMap<>();
 
     private YatActivity view;
 
@@ -42,6 +35,10 @@ public class YatPresenterImpl {
             return Locale.FRENCH;
         if (language.equals("en"))
             return Locale.UK;
+        if (language.equals("de"))
+            return Locale.GERMAN;
+        if (language.equals("it"))
+            return Locale.ITALIAN;
         return new Locale("ru");
     }
 
@@ -90,6 +87,7 @@ public class YatPresenterImpl {
 
     void onStart(YatActivity view) {
         this.view = view;
+        view.hideProgress();
 
         StatePresenter.Fragments fragment = state.getFragments();
         if (fragment == StatePresenter.Fragments.Translate) {
@@ -174,7 +172,7 @@ public class YatPresenterImpl {
         }
     }
 
-    private void translate() {
+    private void translate(String localeUi) {
         final TranslateState translateState = state.getTranslateState();
         String text = translateState.getText();
 
@@ -186,7 +184,7 @@ public class YatPresenterImpl {
 
         view.showProgress();
         String language = (String) LANGUAGES.keySet().toArray()[translateState.getSelectedLanguage()];
-        inter.translate(translateState.getText(), language, "ru", new YatInteractor.YatTranslateCallback() {
+        inter.translate(translateState.getText(), language, localeUi, new YatInteractor.YatTranslateCallback() {
             @Override
             public void success(Word word) {
 
@@ -213,17 +211,17 @@ public class YatPresenterImpl {
 
     }
 
-    void onSelectLanguage(int selectedLanguage) {
+    void onSelectLanguage(int selectedLanguage, String localeUi) {
         TranslateState translateState = state.getTranslateState();
         translateState.setSelectedLanguage(selectedLanguage);
 
         if (view == null)
             return;
 
-        translate();
+        translate(localeUi);
     }
 
-    void onTextTranslate(String text) {
+    void onTextTranslate(String text, String localeUi) {
         final TranslateState translateState = state.getTranslateState();
 
         if (text.isEmpty()) {
@@ -234,7 +232,7 @@ public class YatPresenterImpl {
 
         translateState.setText(text);
 
-        translate();
+        translate(localeUi);
     }
 
     void onSelectHistoryPage() {

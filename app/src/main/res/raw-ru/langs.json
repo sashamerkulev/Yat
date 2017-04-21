@@ -1,0 +1,34 @@
+[
+  {
+    "lang": "ru-en",
+    "landDisplay": "Русский -> Английский"
+  },
+  {
+    "lang": "en-ru",
+    "landDisplay": "Английский -> Русский"
+  },
+  {
+    "lang": "ru-fr",
+    "landDisplay": "Русский -> Французский"
+  },
+  {
+    "lang": "fr-ru",
+    "landDisplay": "Французский -> Русский"
+  },
+  {
+    "lang": "ru-de",
+    "landDisplay": "Русский -> Немецкий"
+  },
+  {
+    "lang": "de-ru",
+    "landDisplay": "Немецкий -> Русский"
+  },
+  {
+    "lang": "ru-it",
+    "landDisplay": "Русский -> Итальянский"
+  },
+  {
+    "lang": "it-ru",
+    "landDisplay": "Итальянский -> Русский"
+  }
+]

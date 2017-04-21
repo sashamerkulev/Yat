@@ -13,6 +13,7 @@ import ru.merkulyevsasha.yat.pojo.Word;
 public interface DbDataSource {
 
 
+    Word findWord(String text, String language);
     int saveHistory(Trans trans, String translatedText);
 
     int getFavorite(int id);

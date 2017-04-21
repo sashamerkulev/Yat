@@ -111,27 +111,32 @@ public class YatInteractorImpl implements YatInteractor {
             @Override
             public void run() {
                 try {
-                    Trans result = repo.translate(text, language, ui);
-                    if (result == null) {
-                        callback.failure(new YatInteractorException());
-                        return;
-                    }
-                    Gson gson = new Gson();
-                    Word word = gson.fromJson(result.getJson(), Word.class);
-                    List<Def> def = word.getDef();
-                    if (def.size() > 0){
-                        String translatedText = def.get(0).getTr().get(0).getText();
-                        int id = repo.saveHistory(result, translatedText);
 
-                        word.setText(text);
-                        word.setTranslatedText(translatedText);
-                        word.setLanguage(language);
-                        word.setFavorite(repo.getFavorite(id));
-                        word.setId(id);
-                        callback.success(word);
+                    Word item = repo.findWord(text, language);
+                    if (item == null) {
+                        Trans result = repo.translate(text, language, ui);
+                        if (result == null) {
+                            callback.failure(new YatInteractorException());
+                            return;
+                        }
+                        Gson gson = new Gson();
+                        Word word = gson.fromJson(result.getJson(), Word.class);
+                        List<Def> def = word.getDef();
+                        if (def.size() > 0){
+                            String translatedText = def.get(0).getTr().get(0).getText();
+                            int id = repo.saveHistory(result, translatedText);
+                            word.setText(text);
+                            word.setTranslatedText(translatedText);
+                            word.setLanguage(language);
+                            word.setFavorite(repo.getFavorite(id));
+                            word.setId(id);
+                            callback.success(word);
 
+                        } else {
+                            callback.failure(new YatInteractorException());
+                        }
                     } else {
-                        callback.failure(new YatInteractorException());
+                        callback.success(item);
                     }
                 } catch(Exception e){
                     callback.failure(new YatInteractorException(e));

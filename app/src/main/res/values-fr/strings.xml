@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">Dictionary-Translator</string>
-    <string name="title_translate">Translate</string>
-    <string name="title_history">History</string>
-    <string name="title_favorite">Favorite</string>
-    <string name="title_settings">Settings</string>
+    <string name="app_name">Dictionnaire-Traducter</string>
+    <string name="title_translate">Traduire</string>
+    <string name="title_history">Histoire</string>
+    <string name="title_favorite">Elite</string>
+    <string name="title_settings">Configurer</string>
     <string name="promt_text">Enter text to translate</string>
-    <string name="dialog_title">Choose the language</string>
+    <string name="dialog_title">Choisir</string>
     <string name="error_translate_message">Error translating text</string>
     <string name="error_load_message">Error loading history/favorite list</string>
     <string name="error_delete_message">Error deleting history/favorite list</string>
-    <string name="search_text_history_hint">Search in history</string>
-    <string name="search_text_favorites_hint">Search in favorites</string>
+    <string name="search_text_history_hint">Recherche</string>
+    <string name="search_text_favorites_hint">Recherche</string>
     <string name="error_tts_message">Text to speech Locale does not support</string>
     <string name="voice_recognition_error_message">Voice recognizer not present</string>
     <string name="recognition_audio_error_message">Audio Error</string>
@@ -19,12 +19,12 @@
     <string name="recognition_no_match_message">No Match</string>
     <string name="recognition_server_error_message">Server Error</string>
 
-    <string name="clear_icon">Clear</string>
+    <string name="clear_icon">Effacer</string>
     <string name="recognition_icon">Recognition</string>
     <string name="texttospeech_icon">Text to speech</string>
     <string name="favorite_icon">Add to favorite</string>
     <string name="fullscreen_icon">Fullscreen</string>
-    <string name="search_icon">Search</string>
+    <string name="search_icon">Recherche</string>
     <string name="delete_dialog_title">Deleting</string>
     <string name="delete_dialog_message">Delete?</string>
     <string name="yes">Yes</string>

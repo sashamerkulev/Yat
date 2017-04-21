@@ -67,6 +67,22 @@ public class DbDataSourceImpl extends SQLiteOpenHelper implements DbDataSource{
     }
 
     @Override
+    public Word findWord(String text, String language) {
+        Word result = null;
+        try (SQLiteDatabase db = getWritableDatabase()) {
+
+            String select = "SELECT * FROM " + WORD_TABLE_NAME + " WHERE " + TEXT_LOWER + "=@word and " + LANG + "=@lang";
+            try (Cursor cursor = db.rawQuery(select, new String[]{text.toLowerCase(), language})) {
+                if (cursor.moveToFirst()) {
+                    result = getWord(cursor);
+                }
+            }
+
+        }
+        return result;
+    }
+
+    @Override
     public int saveHistory(Trans trans, String translatedText) {
 
         int id = 0;

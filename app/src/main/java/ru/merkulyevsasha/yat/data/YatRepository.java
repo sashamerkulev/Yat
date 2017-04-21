@@ -13,6 +13,7 @@ import ru.merkulyevsasha.yat.pojo.Word;
 public interface YatRepository {
 
 
+    Word findWord(String text, String language);
     Trans translate(String text, String lang, String ui);
     int saveHistory(Trans trans, String translatedText);
 

@@ -25,6 +25,11 @@ public class YatRepositoryImpl implements YatRepository{
     }
 
     @Override
+    public Word findWord(String text, String language) {
+        return db.findWord(text, language);
+    }
+
+    @Override
     public Trans translate(String text, String lang, String ui) {
         Trans result = null;
         try {

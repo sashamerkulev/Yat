@@ -18,8 +18,20 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -57,7 +69,7 @@ public class YatActivity extends AppCompatActivity
 
     private BottomSheetItem itemTranslate;
     private BottomSheetItem itemHistory;
-    private BottomSheetItem itemSettings;
+//    private BottomSheetItem itemSettings;
 
     private View container;
     private ProgressBar progress;
@@ -71,6 +83,24 @@ public class YatActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         YatApp.getComponent().inject(this);
+
+        if (YatPresenterImpl.LANGUAGES.size() == 0) {
+            List<Lang> langs = null;
+            Gson gson = new Gson();
+            Type collectionType = new TypeToken<List<Lang>>(){}.getType();
+            try {
+                InputStream ins = getResources().openRawResource(
+                        getResources().getIdentifier("langs", "raw", getPackageName()));
+                String result = IOUtils.toString(ins, StandardCharsets.UTF_8);
+                langs = gson.fromJson(result, collectionType);
+                for (Lang lang : langs) {
+                    YatPresenterImpl.LANGUAGES.put(lang.lang, lang.landDisplay);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                finish();
+            }
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,7 +122,7 @@ public class YatActivity extends AppCompatActivity
 
         itemTranslate = (BottomSheetItem)findViewById(R.id.layout_tranlate);
         itemHistory = (BottomSheetItem)findViewById(R.id.layout_history);
-        itemSettings = (BottomSheetItem)findViewById(R.id.layout_settings);
+        //itemSettings = (BottomSheetItem)findViewById(R.id.layout_settings);
 
         itemTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +138,12 @@ public class YatActivity extends AppCompatActivity
             }
         });
 
-        itemSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pres.onSettingsFragmentSelected();
-            }
-        });
+//        itemSettings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                pres.onSettingsFragmentSelected();
+//            }
+//        });
 
         container = findViewById(R.id.container);
         progress = (ProgressBar) findViewById(R.id.progress);
@@ -132,7 +162,27 @@ public class YatActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_delete) {
-            pres.onDelete();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.delete_dialog_title)
+                    .setIcon(R.drawable.ic_delete_black_24dp)
+                    .setMessage(getString(R.string.delete_dialog_message))
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            pres.onDelete();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -185,7 +235,7 @@ public class YatActivity extends AppCompatActivity
 
         itemTranslate.select();
         itemHistory.unselect();
-        itemSettings.unselect();
+        //itemSettings.unselect();
 
         TranslateFragment fragment = TranslateFragment.getInstance(text, word, isFullscreen);
         replaceFragmentBy(fragment, TRANSLATE_FRAGMENT);
@@ -198,7 +248,7 @@ public class YatActivity extends AppCompatActivity
 
         itemTranslate.unselect();
         itemHistory.select();
-        itemSettings.unselect();
+        //itemSettings.unselect();
 
         HistoryFragment fragment = HistoryFragment.getInstance(selectedPage, searchText);
         replaceFragmentBy(fragment, HISTORY_FRAGMENT);
@@ -217,13 +267,17 @@ public class YatActivity extends AppCompatActivity
 
         itemTranslate.unselect();
         itemHistory.unselect();
-        itemSettings.select();
+        //itemSettings.select();
 
         SettingsFragment fragment = SettingsFragment.getInstance();
         replaceFragmentBy(fragment, SETTINGS_FRAGMENT);
         setActionDeleteVisible(false);
 
         titles.setLeftTitle(getString(R.string.title_settings));
+    }
+
+    private String getUiLocale(){
+        return Locale.getDefault().getLanguage();
     }
 
     public void showSelectLanguageDialog(int selectedLanguage){
@@ -242,7 +296,7 @@ public class YatActivity extends AppCompatActivity
 
                         dialog.dismiss();
                         titles.setLeftTitle((String)YatPresenterImpl.LANGUAGES.values().toArray()[item]);
-                        pres.onSelectLanguage(item);
+                        pres.onSelectLanguage(item, getUiLocale());
                     }
                 });
 
@@ -265,14 +319,13 @@ public class YatActivity extends AppCompatActivity
 
     @Override
     public void onTextComplete(String text) {
-         pres.onTextTranslate(text);
-
         View view = getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+         pres.onTextTranslate(text, getUiLocale());
     }
 
     public void showProgress(){
@@ -468,5 +521,13 @@ public class YatActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    class Lang{
+        @SerializedName("lang")
+        @Expose
+        String lang;
+        @SerializedName("landDisplay")
+        @Expose
+        String landDisplay;
+    }
 
 }
