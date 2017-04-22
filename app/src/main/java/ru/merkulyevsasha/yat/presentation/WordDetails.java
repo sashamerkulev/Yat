@@ -1,12 +1,14 @@
 package ru.merkulyevsasha.yat.presentation;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.gson.Gson;
 
@@ -31,7 +33,6 @@ public class WordDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
         Intent intent = getIntent();
         Word word = (Word) intent.getSerializableExtra(KEY_WORD);
         if (word == null) {
@@ -48,6 +49,16 @@ public class WordDetails extends AppCompatActivity {
         translates.setLayoutManager(layoutManager);
         TranslateDefAdapter adapter = new TranslateDefAdapter(this, word.getDef());
         translates.setAdapter(adapter);
+
+        View yandexLink = findViewById(R.id.textview_yandex_label);
+        yandexLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://tech.yandex.ru/dictionary/"));
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

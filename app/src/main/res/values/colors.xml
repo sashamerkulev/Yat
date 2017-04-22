@@ -8,5 +8,8 @@
     <color name="brown">#907F41</color>
     <color name="gray">#858E98</color>
 
+    <color name="color_number">#9A9A9A</color>
+    <color name="color_translated_text">#4B7893</color>
+    <color name="color_description">#8D634D</color>
 
 </resources>

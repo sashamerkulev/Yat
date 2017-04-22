@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
@@ -147,6 +148,7 @@ public class YatActivity extends AppCompatActivity
 
         container = findViewById(R.id.container);
         progress = (ProgressBar) findViewById(R.id.progress);
+
     }
 
     @Override

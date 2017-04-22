@@ -29,4 +29,6 @@
     <string name="delete_dialog_message">Удалить?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+
+    <string name="made_by_yandex">Реализовано с помощью сервиса «Яндекс.Словарь»</string>
 </resources>

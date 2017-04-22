@@ -1,5 +1,7 @@
 package ru.merkulyevsasha.yat.presentation.translate;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -171,6 +173,16 @@ public class TranslateFragment extends Fragment {
         sourceText = (TextView)view.findViewById(R.id.textview_text);
 
         setTranslates(word);
+
+        View yandexLink = view.findViewById(R.id.textview_yandex_label);
+        yandexLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(Intent.ACTION_VIEW, Uri.parse("https://tech.yandex.ru/dictionary/"));
+                startActivity(intent);
+            }
+        });
+
 
         return view;
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -11,184 +13,186 @@
     >
 
     <RelativeLayout
-        android:orientation="vertical"
+        android:id="@+id/layout_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
+        android:background="@drawable/stroke"
+        android:layout_alignParentTop="true"
         >
 
-        <RelativeLayout
-            android:id="@+id/layout_text"
+        <EditText
+            android:id="@+id/edittext_text"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/stroke"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
             android:layout_alignParentTop="true"
-            >
+            android:hint="@string/promt_text"
+            android:gravity="top"
+            android:inputType="text"
+            android:maxLength="30"
+            android:background="@android:color/transparent"
+            android:padding="4dp"
+            />
 
-            <EditText
-                android:id="@+id/edittext_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                android:layout_marginBottom="32dp"
-                android:layout_alignParentTop="true"
-                android:hint="@string/promt_text"
-                android:gravity="top"
-                android:inputType="text"
-                android:maxLength="30"
-                android:background="@android:color/transparent"
-                android:padding="4dp"
-                />
+        <ImageButton
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_clear_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:contentDescription="@string/clear_icon"
+            />
 
-            <ImageButton
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_clear_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:contentDescription="@string/clear_icon"
-                />
+        <ImageButton
+            android:id="@+id/microphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mic_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@string/recognition_icon"
+            />
 
-            <ImageButton
-                android:id="@+id/microphone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_mic_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="4dp"
-                android:contentDescription="@string/recognition_icon"
-                />
+        <ImageButton
+            android:id="@+id/speek_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_volume_up_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/microphone"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@string/texttospeech_icon"
+            />
 
-            <ImageButton
-                android:id="@+id/speek_source"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_volume_up_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/microphone"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="4dp"
-                android:contentDescription="@string/texttospeech_icon"
-                />
-
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/layout_translatedtext"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_text"
-            android:layout_marginTop="16dp"
-            >
-
-            <TextView
-                android:id="@+id/textview_translated"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="32dp"
-                android:textSize="24sp"
-                />
-
-            <TextView
-                android:id="@+id/textview_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"
-                android:textSize="20sp"
-                android:layout_marginRight="32dp"
-                android:layout_below="@+id/textview_translated"
-                />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/textview_text"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="32dp"
-                android:layout_toLeftOf="@+id/speek_dest"
-                >
-
-
-            </android.support.v7.widget.RecyclerView>
-
-            <ImageButton
-                android:id="@+id/speek_dest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_volume_up_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="4dp"
-                android:contentDescription="@string/texttospeech_icon"
-                />
-
-            <ImageButton
-                android:id="@+id/favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bookmark_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/speek_dest"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="4dp"
-                android:contentDescription="@string/favorite_icon"
-                />
-
-            <!--<ImageButton-->
-                <!--android:id="@+id/but1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/ic_arrow_upward_black_24dp"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                <!--android:tint="@color/gray"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_below="@id/favorite"-->
-                <!--android:layout_marginTop="24dp"-->
-                <!--android:layout_marginRight="4dp"-->
-                <!--/>-->
-
-            <ImageButton
-                android:id="@+id/button_fullscreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_fullscreen_black_24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/gray"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/favorite"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="4dp"
-                android:contentDescription="@string/fullscreen_icon"
-                />
-
-
-        </RelativeLayout>
 
 
     </RelativeLayout>
 
-</ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layout_translatedtext"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_text"
+        android:layout_marginTop="16dp"
+        android:layout_above="@+id/textview_yandex_label"
+        >
+
+        <TextView
+            android:id="@+id/textview_translated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="32dp"
+            android:textSize="24sp"
+            />
+
+        <TextView
+            android:id="@+id/textview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:textSize="20sp"
+            android:layout_marginRight="32dp"
+            android:layout_below="@+id/textview_translated"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textview_text"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="32dp"
+            android:layout_toLeftOf="@+id/speek_dest"
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageButton
+            android:id="@+id/speek_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_volume_up_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@string/texttospeech_icon"
+            />
+
+        <ImageButton
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bookmark_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/speek_dest"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@string/favorite_icon"
+            />
+
+        <!--<ImageButton-->
+        <!--android:id="@+id/but1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/ic_arrow_upward_black_24dp"-->
+        <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--android:tint="@color/gray"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@id/favorite"-->
+        <!--android:layout_marginTop="24dp"-->
+        <!--android:layout_marginRight="4dp"-->
+        <!--/>-->
+
+        <ImageButton
+            android:id="@+id/button_fullscreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_fullscreen_black_24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/favorite"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@string/fullscreen_icon"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textview_yandex_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/made_by_yandex"
+        android:textColor="@color/color_translated_text"
+        android:background="?attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
+
