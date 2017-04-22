@@ -4,13 +4,13 @@
     <string name="title_history">Histoire</string>
     <string name="title_favorite">Elite</string>
     <string name="title_settings">Configurer</string>
-    <string name="promt_text">Enter text to translate</string>
+    <string name="promt_text">Texte</string>
     <string name="dialog_title">Choisir</string>
     <string name="error_translate_message">Error translating text</string>
     <string name="error_load_message">Error loading history/favorite list</string>
     <string name="error_delete_message">Error deleting history/favorite list</string>
-    <string name="search_text_history_hint">Recherche</string>
-    <string name="search_text_favorites_hint">Recherche</string>
+    <string name="search_text_history_hint">Chercher</string>
+    <string name="search_text_favorites_hint">Chercher</string>
     <string name="error_tts_message">Text to speech Locale does not support</string>
     <string name="voice_recognition_error_message">Voice recognizer not present</string>
     <string name="recognition_audio_error_message">Audio Error</string>
@@ -24,10 +24,10 @@
     <string name="texttospeech_icon">Text to speech</string>
     <string name="favorite_icon">Add to favorite</string>
     <string name="fullscreen_icon">Fullscreen</string>
-    <string name="search_icon">Recherche</string>
-    <string name="delete_dialog_title">Deleting</string>
-    <string name="delete_dialog_message">Delete?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="search_icon">Chercher</string>
+    <string name="delete_dialog_title">Supprimer</string>
+    <string name="delete_dialog_message">Supprimer?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Pas</string>
     <string name="made_by_yandex">Made by helping «Яндекс.Словарь»</string>
 </resources>

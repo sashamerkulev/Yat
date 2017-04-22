@@ -176,7 +176,7 @@ public class YatPresenterImpl {
         final TranslateState translateState = state.getTranslateState();
         String text = translateState.getText();
 
-        if (text.length() < 3)
+        if (text.length() < 2)
             return;
 
         if (view == null)
