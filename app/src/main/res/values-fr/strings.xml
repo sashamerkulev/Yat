@@ -29,4 +29,5 @@
     <string name="delete_dialog_message">Delete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="made_by_yandex">Made by helping «Яндекс.Словарь»</string>
 </resources>
