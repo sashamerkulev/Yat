@@ -1,12 +1,12 @@
 package ru.merkulyevsasha.yat.domain;
 
-import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import ru.merkulyevsasha.yat.data.YatRepository;
 import ru.merkulyevsasha.yat.data.pojo.Trans;
+import ru.merkulyevsasha.yat.helper.GsonHelper;
 import ru.merkulyevsasha.yat.pojo.Def;
 import ru.merkulyevsasha.yat.pojo.Word;
 
@@ -121,14 +121,13 @@ public class YatInteractorImpl implements YatInteractor {
                 try {
 
                     Word item = repo.findWord(text, language);
-                    Gson gson = new Gson();
                     if (item == null) {
                         Trans result = repo.translate(text, language, ui);
                         if (result == null) {
                             callback.failure(new YatInteractorException());
                             return;
                         }
-                        Word word = gson.fromJson(result.getJson(), Word.class);
+                        Word word = GsonHelper.json2Word(result.getJson());
                         List<Def> def = word.getDef();
                         if (def.size() > 0){
                             String translatedText = def.get(0).getTr().get(0).getText();
@@ -140,7 +139,7 @@ public class YatInteractorImpl implements YatInteractor {
                             callback.failure(new YatInteractorException());
                         }
                     } else {
-                        Word word = gson.fromJson(item.getJson(), Word.class);
+                        Word word = GsonHelper.json2Word(item.getJson());
                         List<Def> def = word.getDef();
                         setWord(word, text, def.get(0).getTr().get(0).getText(), language, (int) item.getId());
                         callback.success(word);

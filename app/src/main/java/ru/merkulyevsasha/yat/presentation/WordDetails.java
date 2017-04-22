@@ -10,9 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.gson.Gson;
-
 import ru.merkulyevsasha.yat.R;
+import ru.merkulyevsasha.yat.helper.GsonHelper;
 import ru.merkulyevsasha.yat.pojo.Word;
 import ru.merkulyevsasha.yat.presentation.translate.TranslateDefAdapter;
 
@@ -41,8 +40,7 @@ public class WordDetails extends AppCompatActivity {
 
         setTitle(word.getText()+" ("+word.getTranslatedText()+")");
 
-        Gson gson = new Gson();
-        word = gson.fromJson(word.getJson(), Word.class);
+        word = GsonHelper.json2Word(word.getJson());
 
         RecyclerView translates = (RecyclerView)findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
