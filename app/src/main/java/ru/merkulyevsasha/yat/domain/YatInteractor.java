@@ -42,4 +42,7 @@ public interface YatInteractor {
     void searchHistory(String text, YatLoadCallback callback);
     void searchFavorites(String text, YatLoadCallback callback);
 
+    void setLanguageIndex(int index);
+    int getLanguageIndex();
+
 }

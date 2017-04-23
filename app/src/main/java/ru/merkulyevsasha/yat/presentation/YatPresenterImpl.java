@@ -79,7 +79,7 @@ public class YatPresenterImpl {
 
         state = new StatePresenter();
         state.setFragments(StatePresenter.Fragments.Translate);
-        state.setTranslateState(new TranslateState(0, "", 0));
+        state.setTranslateState(new TranslateState(inter.getLanguageIndex(), "", 0));
         state.setHistoryState(new HistoryState(HistoryState.HistoryPage));
         state.setSettingsState(new SettingsState());
         this.inter = inter;
@@ -214,6 +214,7 @@ public class YatPresenterImpl {
     void onSelectLanguage(int selectedLanguage, String localeUi) {
         TranslateState translateState = state.getTranslateState();
         translateState.setSelectedLanguage(selectedLanguage);
+        inter.setLanguageIndex(selectedLanguage);
 
         if (view == null)
             return;

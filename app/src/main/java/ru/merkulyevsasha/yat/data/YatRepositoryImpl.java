@@ -8,6 +8,7 @@ import retrofit2.Response;
 import ru.merkulyevsasha.yat.data.db.DbDataSource;
 import ru.merkulyevsasha.yat.data.http.HttpDataSource;
 import ru.merkulyevsasha.yat.data.pojo.Trans;
+import ru.merkulyevsasha.yat.data.pref.YatSharedPreferences;
 import ru.merkulyevsasha.yat.pojo.Word;
 
 /**
@@ -18,10 +19,12 @@ public class YatRepositoryImpl implements YatRepository{
 
     private final DbDataSource db;
     private final HttpDataSource http;
+    private final YatSharedPreferences pref;
 
-    public YatRepositoryImpl(DbDataSource db, HttpDataSource http){
+    public YatRepositoryImpl(DbDataSource db, HttpDataSource http, YatSharedPreferences pref){
         this.db = db;
         this.http = http;
+        this.pref = pref;
     }
 
     @Override
@@ -94,6 +97,16 @@ public class YatRepositoryImpl implements YatRepository{
     @Override
     public List<Word> searchFavorites(String text) {
         return db.searchFavorites(text);
+    }
+
+    @Override
+    public void setLanguageIndex(int index) {
+        pref.setLanguageIndex(index);
+    }
+
+    @Override
+    public int getLanguageIndex() {
+        return pref.getLanguageIndex();
     }
 
 

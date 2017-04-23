@@ -6,8 +6,7 @@ package ru.merkulyevsasha.yat.domain;
 
 public class YatInteractorException extends Exception {
 
-    public YatInteractorException(){
-    }
+    public YatInteractorException(){}
 
     public YatInteractorException(Exception e){
         super(e);

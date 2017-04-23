@@ -28,4 +28,7 @@ public interface YatRepository {
     List<Word> searchHistory(String text);
     List<Word> searchFavorites(String text);
 
+    void setLanguageIndex(int index);
+    int getLanguageIndex();
+
 }

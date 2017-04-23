@@ -185,4 +185,23 @@ public class YatInteractorImpl implements YatInteractor {
             }
         });
     }
+
+    @Override
+    public void setLanguageIndex(final int index) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    repo.setLanguageIndex(index);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getLanguageIndex() {
+        return repo.getLanguageIndex();
+    }
 }
